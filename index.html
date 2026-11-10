@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>电影学学术论文论述语料库与答题锦囊</title>
+  <style>
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-color: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-light: #eff6ff;
+      --quote-bg: #f8fafc;
+      --quote-border: #3b82f6;
+      --tag-bg: #f1f5f9;
+      --tag-text: #475569;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+      --font-serif: "Noto Serif SC", "Source Han Serif SC", SimSun, "Songti SC", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --accent-color: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --accent-light: #082f49;
+      --quote-bg: #0f172a;
+      --quote-border: #38bdf8;
+      --tag-bg: #334155;
+      --tag-text: #cbd5e1;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.65;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header & Navigation */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0.8rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2563eb, #8b5cf6);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+    }
+
+    .logo-title h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .logo-title p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .btn {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--tag-bg);
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: #ffffff !important;
+      border-color: var(--accent-color);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Main Layout */
+    .app-body {
+      flex: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Top Banner / Filter Bar */
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .hero-banner h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .hero-banner p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 900px;
+    }
+
+    /* Search & Tab Controls */
+    .controls-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.65rem 1rem 0.65rem 2.4rem;
+      font-size: 0.9rem;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      background-color: var(--bg-secondary);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    .search-box .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .tabs-nav::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 9px;
+      border: 1px solid transparent;
+      background-color: var(--bg-secondary);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-main);
+      background-color: var(--tag-bg);
+    }
+
+    .tab-btn.active {
+      background-color: var(--accent-color);
+      color: #ffffff;
+      border-color: var(--accent-color);
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    /* Views: Papers List, Blueprints, Quotes */
+    .view-content {
+      display: none;
+    }
+    .view-content.active {
+      display: block;
+    }
+
+    /* Category Filter Pills */
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .cat-pill {
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s;
+    }
+
+    .cat-pill:hover {
+      border-color: var(--accent-color);
+      color: var(--text-main);
+    }
+
+    .cat-pill.active {
+      background-color: var(--accent-light);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      font-weight: 600;
+    }
+
+    /* Paper Cards Grid */
+    .papers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 640px) {
+      .papers-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .paper-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .paper-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--accent-color);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .cat-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background-color: var(--accent-light);
+      color: var(--accent-color);
+      letter-spacing: 0.02em;
+    }
+
+    .journal-badge {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .card-author {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card-thesis {
+      background-color: var(--quote-bg);
+      border-left: 3px solid var(--quote-border);
+      padding: 0.65rem 0.85rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    .terms-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .term-tag {
+      font-size: 0.72rem;
+      padding: 0.2rem 0.45rem;
+      background-color: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 5px;
+    }
+
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.65rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .btn-detail {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      background-color: var(--accent-color);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background-color 0.2s;
+    }
+
+    .btn-detail:hover {
+      background-color: var(--accent-hover);
+    }
+
+    /* Modal / Detail Drawer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-container {
+      background-color: var(--bg-card);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .modal-header h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text-main);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+    .modal-close:hover {
+      background-color: var(--tag-bg);
+      color: var(--text-main);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .detail-section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-box {
+      position: relative;
+      background-color: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      padding: 0.85rem 1rem 0.85rem 1rem;
+      margin-bottom: 0.75rem;
+      font-family: var(--font-serif);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+
+    .quote-copy-btn {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 5px;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-sans);
+    }
+    .quote-copy-btn:hover {
+      background-color: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
+
+    .section-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .section-item {
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+    }
+
+    .section-item-title {
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 0.3rem;
+      color: var(--text-main);
+    }
+
+    .section-item-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Blueprints View */
+    .blueprints-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .blueprint-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .bp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .bp-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .bp-thesis {
+      background-color: var(--accent-light);
+      border: 1px solid rgba(37, 99, 235, 0.2);
+      border-radius: 8px;
+      padding: 0.85rem 1.1rem;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .bp-outline-step {
+      border-left: 2px solid var(--accent-color);
+      padding-left: 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .bp-step-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .bp-step-desc {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      line-height: 1.55;
+    }
+
+    /* Quotes Bank View */
+    .quotes-stream {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .quote-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quote-text {
+      font-family: var(--font-serif);
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: var(--text-main);
+    }
+
+    .quote-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .quote-source {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: rgba(15, 23, 42, 0.9);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      z-index: 200;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+      opacity: 0;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* QR Code & Mobile Connection Drawer */
+    .qr-modal {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .qr-container {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      display: inline-block;
+      margin: 1rem auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .qr-ip-text {
+      font-family: monospace;
+      font-size: 1.1rem;
+      background: var(--tag-bg);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      color: var(--accent-color);
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+  <script src="./qrcode.min.js"></script>
+  <script>
+    if (typeof QRCode === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\\/script>');
+    }
+  </script>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">🎬</div>
+        <div class="logo-title">
+          <h1>电影学论文语料库 & 论述答题锦囊</h1>
+          <p>北影学报 · 当代电影 · 浙传学刊精选 (16篇高分研读)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn" id="btn-device-hub" title="其他设备访问">
+          <span>📱 手机同步</span>
+        </button>
+        <button class="btn" id="btn-toggle-theme" title="切换深色/浅色模式">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Body Content -->
+  <main class="app-body">
+
+    <!-- Hero Banner with Fast Stats -->
+    <section class="hero-banner">
+      <h2>学术写作与研究生考评论述参考库</h2>
+      <p>
+        系统整合2025-2026年《北京电影学院学报》《当代电影》等核心期刊论文。涵盖 <strong>AIGC数智媒介</strong>、<strong>微短剧与后电影</strong>、<strong>新主流大片与共同体美学</strong>、<strong>东方传统美学与生命诗学</strong> 及 <strong>国漫复兴与本体理论</strong> 五大核心专题，配有万能论述金句、解题蓝图与案例片目。
+      </p>
+    </section>
+
+    <!-- Search & Main Mode Switcher -->
+    <section class="controls-bar">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-view="view-papers">📚 论文深度精读 (16篇)</button>
+        <button class="tab-btn" data-view="view-blueprints">💡 论述答题锦囊 (5大题型)</button>
+        <button class="tab-btn" data-view="view-quotes">💎 核心论述金句库</button>
+      </div>
+
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="global-search" placeholder="搜索论文、论点、学者、金句或案例片目...">
+      </div>
+    </section>
+
+    <!-- VIEW 1: Papers Corpus Cards -->
+    <section id="view-papers" class="view-content active">
+      <!-- Category Filter Pills -->
+      <div class="category-pills" id="category-filter-pills">
+        <button class="cat-pill active" data-cat="all">全部专题 (16)</button>
+        <!-- Injected via JS -->
+      </div>
+
+      <div class="papers-grid" id="papers-grid">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- VIEW 2: Essay Blueprints (答题模板) -->
+    <section id="view-blueprints" class="view-content">
+      <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+        📌 针对研究生考试论述题、学术期末论文、毕业开题等高频题型定制的标准破题逻辑与分段论证模板。
+      </div>
+      <div class="blueprints-grid" id="blueprints-grid">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+    <!-- VIEW 3: Golden Quotes Stream (金句速查) -->
+    <section id="view-quotes" class="view-content">
+      <div style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+        ✨ 精选自16篇权威论文的学术金句与理论论断，点击“一键复制”可直接粘贴于论文写作与笔记中。
+      </div>
+      <div class="quotes-stream" id="quotes-stream">
+        <!-- Injected via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>电影学论述写作参考语料库 · 局域网跨设备直连 · 2026</p>
+  </footer>
+
+  <!-- Modal for Paper Details -->
+  <div class="modal-overlay" id="paper-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div>
+          <span class="cat-badge" id="modal-cat">专题</span>
+          <h3 id="modal-title" style="margin-top: 0.4rem;">论文标题</h3>
+          <div id="modal-meta" style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem;">作者 · 期刊</div>
+        </div>
+        <button class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Mobile QR Code -->
+  <div class="modal-overlay" id="qr-modal">
+    <div class="modal-container" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>📱 手机 / 平板跨设备访问</h3>
+        <button class="modal-close" id="qr-close-btn">&times;</button>
+      </div>
+      <div class="modal-body qr-modal">
+        <p style="font-size: 0.9rem; color: var(--text-muted);" id="qr-modal-desc">
+          打开手机相机或微信扫一扫二维码，随时在手机或平板上阅读与一键复制学术语料：
+        </p>
+        <div class="qr-container">
+          <div id="qrcode"></div>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">或在手机浏览器中直接输入网址：</p>
+        <div class="qr-ip-text" id="qr-lan-url">正在获取网址...</div>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-primary" id="copy-url-btn" style="margin: 0 auto;">复制网址</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Element -->
+  <div class="toast" id="toast">已成功复制到剪贴板！</div>
+
+  <!-- Embedded Data -->
+  <script>
+    const PAPERS_DATA = [{"id": "p01_liu_jie_ai_music", "title": "AI音乐生成时代电影配乐的范式转型——工艺革新、美学重构与产业生态变迁", "author": "刘捷", "institution": "四川大学艺术学院教授、博士生导师", "journal": "《北京电影学院学报》2026年第8期", "category_id": "cat_ai_media", "category_name": "AIGC与数智媒介重构", "tags": ["电影配乐", "AI音乐生成", "美学重构", "人机协同", "作者性消解", "音画关系", "配乐范式转型"], "core_thesis": "AI音乐生成正在推动电影配乐由传统的人类主体创作模式迈向“人机协同”新范式，重塑了配乐制作工艺流程，并引发了作者性重构、情感真实性危机以及原创性再界定等深刻美学反思。", "theoretical_terms": ["人机协同（Human-AI Collaboration）", "主导动机（Leitmotif）的算法重构", "迭代循环式工艺（Iterative Process）", "音乐编辑师（Music Editor）赋权", "作者性的去中心化与装配式重构", "情感真实性（Emotional Authenticity）的算法拟像", "原创性边界的动态演变"], "analytical_framework": [{"section": "一、AI音乐生成在电影配乐中的应用现状与缺陷", "point": "AI生成在小样试听、类型化配乐中表现优异，但在复杂戏剧冲突、精确音画同步（Frame-accurate Sync）以及深层情感微调上仍存在技术断裂与机械化短板。"}, {"section": "二、工艺层面的更新：流程重构与角色位移", "point": "传统配乐从剧本、定剪到作曲录音的‘线性递进’流程被打破，转向前期介入、快速生成的‘迭代循环’；作曲家的核心技能由纯粹的乐理谱曲转向提示词工程与审美甄别，音乐编辑师地位大幅上升。"}, {"section": "三、美学重构：作者性、情感与原创性之辨", "point": "（1）作者性被分散在算法模型、程序员、提示词输入者与后期剪辑师之间；（2）AI生成的音乐虽然音色逼真，但缺乏生命经验的血肉感，引发对算法情感拟像的审美疑虑；（3）原创性从‘无中生有的天才神话’转变为‘基于数据库的重组与跨界杂合’。"}, {"section": "四、产业生态变迁：分工重组与版权伦理", "point": "配乐门槛降低冲击初级配乐劳工，加剧版权侵权争议（如训练集侵权）与职业伦理困境，未来呼唤制度规范与高阶人机协同机制。"}], "golden_quotes": ["AI音乐生成改变了传统电影配乐的生产逻辑，重新界定了电影配乐的作者性、情感真实性与原创性，正推动电影配乐由传统创作模式迈向人机协同的新范式。", "传统电影配乐创作依赖于人类作曲家的情感经验与专业乐理积淀，而AI配乐将海量音乐知识转化为概率模型输出，使作曲技术功能从单纯的创作依托转变为一种评价依据与审美筛选。", "在AI时代，配乐的‘作者性’不再局限于单一的天才谱曲家，而是演变为算法模型、提示词工程师、导演与音乐编辑师共同构成的网络化装配主体。", "AI生成音乐能够高度模拟特定情绪的声学特征，但这种‘拟像式共情’缺乏人类创作者面对生命创伤与生命激荡时的原发性体验，因而面临着情感真实性的哲学追问。", "未来电影配乐的发展方向并非AI与人类之间的简单替代，而是在新的技术条件下不断探索二者优势互补、协同共创的新型电影配乐范式。"], "case_studies": ["好莱坞商业大片音画合成机制", "Suno/Udio音乐模型生成案例", "瓦格纳《尼伯龙根的指环》主导动机原则在现代电影中的数字化应用"], "essay_application": {"applicable_questions": ["论述人工智能（AIGC）对影视视听语言与配乐创作的冲击与重塑", "论述数智时代电影‘作者论’（Auteur Theory）的演变与危机", "分析技术革新对电影工业制作流程与艺术美学关系的重构"], "thesis_angle": "批判性立论：拒绝‘技术决定论’与‘技术虚无主义’，提出AI不是创作主体的灭绝者，而是促成了电影工艺从‘线性递进’到‘人机协同’的范式转移，并在美学上倒逼创作者由‘匠人技能’走向‘深层精神性提炼’。", "argument_blueprint": ["引论：指明AIGC介入电影配乐是视听技术史的第四次浪潮（从无声到有声、从磁带到数字、从数字工作站到算法生成）。", "分论点一（工艺转型）：从线性作业走向‘人机即时交互与动态迭代’，配乐职能向提示词编排与审美策展转移。", "分论点二（美学重构）：打破经典作者论的自律神话，作者性呈现‘去中心化装配’；同时在情感真伪层面产生‘算法拟像 vs 具身经验’的美学辩证。", "分论点三（产业与伦理）：底线在于版权与文化主体性，高地在于探索人机协同的情感深度。", "结论：电影视听艺术的终极内核仍是人类生命经验的投影，AI越泛滥，真正的人文灵光越稀缺。"]}}, {"id": "p02_ru_jixiao_visual_empathy", "title": "从“视觉过剩”到“共情稀缺”：AI时代影视产业的共同体美学转向", "author": "茹纪晓", "institution": "北京电影学院现代创意媒体学院副教授", "journal": "《北京电影学院学报》2026年第6期", "category_id": "cat_ai_media", "category_name": "AIGC与数智媒介重构", "tags": ["AIGC", "视觉过剩", "共情稀缺", "共同体美学", "影视工业转向", "审美同质化", "观众接受"], "core_thesis": "生成式AI使得高质量影像生产门槛归零，导致影视领域出现‘视觉过剩’与‘形式平庸’；影视产业的核心矛盾由此转向‘共情稀缺’，迫使影视创作必须依凭‘共同体美学’在价值、关系与信任三个维度重建情感连接。", "theoretical_terms": ["视觉过剩（Visual Surplus / Excess）", "共情稀缺（Empathy Scarcity）", "均值化与审美同质化（Aesthetic Homogenization）", "共同体美学（Community Aesthetics）", "共情型影视工业（Empathy-driven Film Industry）", "奇观边际效用递减", "接受层面的认知转向"], "analytical_framework": [{"section": "一、AI驱动下影视生产结构的重构", "point": "像Seedance等视频生成大模型打破了传统重资本、长周期的工业垄断，影像复制与生成实现无摩擦扩张，视觉表达能力被彻底平权化。"}, {"section": "二、AI驱动下影视价值结构的扰动：核心矛盾的位移", "point": "高保真视听奇观成为廉价日常，形式风格的差异化空间被急剧压缩，作品陷入均值化平庸；观众对视觉轰炸脱敏，转而在碎片化、片段化情绪中渴望深度共情，形成‘视觉过剩 vs 共情稀缺’的结构性失衡。"}, {"section": "三、共同体美学与影视共情的建构机制", "point": "影视共情不是孤立的感官刺激，而是依托共同体美学的三个维度：价值认同（核心价值体系的共鸣）、人物关系（鲜活复杂社会关系的具象化）与信任契约（作者与观众之间的情感诚实度）。"}, {"section": "四、共情型影视工业的建构路径：AI时代的结构性转向", "point": "从单纯追求视效升级的‘奇观型重工业’转向聚焦人文深度与群体记忆的‘共情型工业’，以情感算法与精神共识对抗算法的冷感虚无。"}], "golden_quotes": ["AIGC的迅速发展使高质量影像从稀缺资源转变为能够普遍获得的创作能力，视觉表达的普遍化压缩了风格差异空间，‘视觉过剩’与‘共情稀缺’构成当代影视产业的核心矛盾。", "当逼真的视觉奇观通过几行提示词即可批量复制，技术的震撼感便不可避免地走向边际递减；观众的评价重心随之由感官刺激转向价值传递与情感表达。", "算法可以生成完美的像素与光影，却无法自动生成具有文化温度的生命共鸣；影视艺术的不可替代性，正从‘视听再现能力’退守并升华至‘意义阐释与共情凝聚能力’。", "共同体美学通过价值、关系与信任三个维度，为理解影像如何重新获得情感共鸣与公共意义提供了理论路径。", "未来的影视工业不能仅停留在追求更强算力和更高分辨率的‘算力崇拜’，而应走向以重构群体记忆、抚慰大众心灵为核心的‘共情型影视工业’。"], "case_studies": ["Seedance 2.0等视频大模型的多镜头序列", "主流大片从视效堆砌转向情感动员的转型案例", "网络短片同质化视觉风暴与高分口碑作品的共情反差"], "essay_application": {"applicable_questions": ["论述AIGC背景下影视美学的‘危’与‘机’", "结合‘视觉过剩与共情稀缺’论述新时代中国电影的价值取向", "如何理解‘共同体美学’在数字视听时代的当代建构意义？"], "thesis_angle": "指明当代电影的核心危机不是‘技术不足’而是‘意义贫困’与‘共情饥渴’。论述应抓住‘技术下沉导致视觉贬值，情感与文化共识溢价’这一辩证法，将共同体美学作为破局之钥。", "argument_blueprint": ["立论：指出AIGC时代的根本转向——从‘技术稀缺型生产’转向‘注意力稀缺与情感稀缺型消费’。", "第二层：剖析‘视觉过剩’的病理——视听门槛抹平带来的审美均质化与感官疲劳，单纯的奇观难以维系持久的文化认同。", "第三层：阐释‘共情稀缺’的本质——后现代个体的原子化孤独与算法推荐的信息茧房，呼唤能够连接群体命运的精神契约。", "第四层：以‘共同体美学’给出药方——在价值共振、真实社会关系再现与信任机制中，锻造不可替代的人文厚度。", "结语：高科技终须回归高人文，从奇观重工业走向共情型艺术工业。"]}}, {"id": "p03_li_zhen_zheng_aesthetic", "title": "仪式之态·崇高之美·雅韵之境：中国电影美学中的“正”", "author": "李镇", "institution": "中国电影艺术研究中心研究员", "journal": "《北京电影学院学报》2026年第7期", "category_id": "cat_traditional", "category_name": "中国传统美学与东方诗学", "tags": ["中国电影美学", "正", "礼乐传统", "仪式感", "崇高美", "雅", "中国电影学派"], "core_thesis": "中国电影美学长期秉持着对“正”的审美追求，这一取向深植于中华“礼乐”文化传统，具体外化为仪式之态、崇高之美与雅韵之境三重维度，是构建中国电影自主知识体系与中华文明现代力量的关键根基。", "theoretical_terms": ["美学之“正”（Zheng / Aesthetic Righteousness & Orthodoxy）", "礼乐文化传统（Rite and Music Tradition）", "仪式之态（Ritual State / Stance）", "崇高之美（Sublime Beauty / Grandeur）", "雅韵之境（Elegance and Poetic Realm）", "中正和平与文以载道", "中国电影学派的美学基因"], "analytical_framework": [{"section": "一、仪式感：礼乐基因的视听外化", "point": "“正”首先体现为庄重的仪式形态。从早期家庭伦理片到当代国家重大历史题材，影像通过对称构图、庄严节奏、象征物象与神圣时空，承载着儒家‘礼’的秩序感与道德秩序。"}, {"section": "二、崇高美：家国大义与牺牲精神的精神超越", "point": "不同于西方带有惊悚与恐惧的康德式崇高，中国电影的‘崇高之美’源于‘仁以为己任，死而后已’的伦理升华，表现为个体向国家、民族、集体崇高意志的主动熔铸与精神升华。"}, {"section": "三、“雅”：东方意境与古典诗学的现代转化", "point": "“正”亦体现为“雅”，反对低俗轻佻与纯粹的感官宣泄。通过留白、含蓄、虚实相生的水墨视听风格，追求“中正和平”、“发乎情止乎礼义”的东方典雅韵味。"}], "golden_quotes": ["中国电影美学长期秉持着对‘正’的审美追求，这一取向的形成与‘礼乐’文化传统有深度关联，具体呈现为仪式感、崇高美与‘雅’三个主要方向。", "‘正’不仅关涉政治正统与社会正义，更在审美层面转化为庄重沉潜的视听秩序与抵御虚无的价值定力。", "中国电影中的仪式感并非空洞的外在排场，而是礼乐文明在现代银幕上的仪式化重构，用影像的崇高秩序安放个体的精神焦虑。", "东方崇高不同于西方惊颤恐惧式的超验客体，它始终锚定于家国责任与道德献身之中，是在人伦大义中完成对有限肉身的精神超越。", "守‘正’方能创‘新’，中国电影学派之所以能够自立于世界电影之林，正在于其在现代电影视听语言中注入了浩然正气与典雅高洁的文化气象。"], "case_studies": ["《建国大业》《长津湖》等重大革命历史题材中的仪式建构", "《一江春水向东流》《早春二月》的传统雅韵与现实主义正气", "《满江红》《封神》等历史神话电影中的礼乐与正义隐喻"], "essay_application": {"applicable_questions": ["论述‘中国电影学派’的美学特质与建构路径", "结合中华优秀传统文化，谈谈中国电影美学中的‘守正创新’", "论述中国主流电影中的‘崇高’与仪式感塑造"], "thesis_angle": "以传统美学范畴‘正’（仪式、崇高、雅）作为破题枢纽，阐释中国电影在面对西方好莱坞世俗化、去中心化解构思潮时，所独具的‘礼乐精神与国家美学’定力。", "argument_blueprint": ["题眼破析：界定‘正’的多重内涵——道德之正、秩序之正、审美之雅。", "论证一：仪式之态——影像形式的整肃与伦理秩序的凝结（礼乐精神的现代转译）。", "论证二：崇高之美——从家国情怀到大义担当，塑造区别于西方的东方伦理崇高。", "论证三：雅韵之境——摒弃视听滥觞，以意境、含蓄与留白构筑中国电影的君子之风与艺术格调。", "结语升华：在当今视听娱乐快餐化、碎片化的语境下，以‘正’立骨，铸就新时代中国电影的精神高峰。"]}}, {"id": "p04_liu_qiang_kugao_aesthetic", "title": "论中国艺术电影中枯槁美学的生命意识", "author": "刘强", "institution": "西北大学文学院副教授", "journal": "《北京电影学院学报》2026年第8期", "category_id": "cat_traditional", "category_name": "中国传统美学与东方诗学", "tags": ["枯槁美学", "中国艺术电影", "生命诗学", "形神一体", "荒寒", "古澹", "虚静", "东方哲学"], "core_thesis": "枯槁美学是中国古典哲学（道家、禅宗）的独特审美范畴。中国艺术电影通过荒寒之境、古澹之味与虚静之观的形神一体实践，在衰败与枯竭意象中透视生命本真，建构了‘简而至纯、拙而近道、空而证永’的东方生命诗学。", "theoretical_terms": ["枯槁美学（Aesthetics of Withered and Desolate / Kugao Aesthetics）", "形神一体（Unity of Form and Spirit）", "艺道合一（Integration of Art and Dao）", "荒寒之境（Desolate and Chilly Realm）", "古澹之味（Ancient and Bland Flavor）", "虚静之观（Void and Quiet Observation）", "西方废墟（Ruin） vs 日本侘寂（Wabi-sabi） vs 中国枯槁"], "analytical_framework": [{"section": "一、影以载道：枯槁美学在艺术电影中的当代传承与辨析", "point": "辨析中国‘枯槁’不同于西方的‘废墟（Ruin，强调历史伤痕与肉体毁灭）’和日本的‘侘寂（Wabi-sabi，偏向物哀与残缺无常）’。中国枯槁强调‘枯木逢春’、‘物极必反’，在看似死寂中蕴含着天地大化、生生不息的宇宙元气与生命坚守。"}, {"section": "二、形神一体：枯槁美学的影像表达与生命叙事", "point": "（1）荒寒之境：干瘪枯黄的西北戈壁、荒弃工厂、冷瑟冬景，实现空间与人物命运的异质同构；（2）古澹之味：长镜头、极简色调、去除多余技巧的‘影像减法’，沉淀出时间的粗粝质感；（3）虚静之观：静默音响、自然声效、留白对话，建立澄澈心灵的观照。"}, {"section": "三、艺道合一：枯槁美学的境界升华", "point": "走向‘简而至纯、拙而近道、空而证永’，以形写神，超脱物象直达宇宙生命的本体澄明。"}], "golden_quotes": ["枯槁美学作为中国美学的重要范畴，是一种在荒寒、衰败的意象中洞见生命本真的影像诗学。", "中国的枯槁美学不同于西方废墟美学的悲壮毁灭感，亦有别于日本侘寂美学的哀戚孤绝，它植根于道禅‘万物负阴而抱阳’的哲学智慧，在枯槁萧索处蕴育着最坚韧的生命生机。", "枯槁之美是‘绚烂之极归于平淡’，它通过荒寒的空间布景、古澹的时间凝视与虚静的声音留白，将电影影像还原为对存在本身的沉思。", "在影像的‘减法’中，物象褪去了人工雕琢的浮华，呈现出‘拙而近道’的原生质地，令观者在物质世界的枯萎凋零中体证精神生命的永恒复归。", "中国艺术电影借由枯槁美学的转化，实现了从‘视觉消费’向‘哲学观照’的跃迁，为当代世界电影贡献了深邃的东方生命诗学。"], "case_studies": ["贾樟柯《三峡好人》《风流一代》中的荒废建筑与拆迁残骸", "王兵、刁亦男作品中的北方破败工业锈带与荒寒空间", "李睿珺《隐入尘烟》中的西北黄土、干草垛与麦粒印记", "侯孝贤《刺客聂隐娘》中的苍茫山水与枯叶萧萧"], "essay_application": {"applicable_questions": ["论中国艺术电影（或第六代、新导演创作）的空间修辞与美学格调", "如何从中国古典哲学（道家、禅宗）视角阐释中国本土电影语言？", "比较东方生命美学（枯槁、留白）与西方现代主义电影视听之差异"], "thesis_angle": "极高分理论切入点！将通常被视作‘底层灰暗’或‘残破现实’的艺术电影景象，提升到中国古代‘枯槁美学’与‘生生之道’的哲学高度进行正面阐释，展现考生的扎实古典美学素养。", "argument_blueprint": ["概念澄清：引出枯槁美学——非绝望沉沦，而在物形凋敝中洞见精神生机（区别于西方废墟与日本侘寂）。", "论述一（荒寒空间）：戈壁、断壁残垣不是自然废墟，而是与人物被压抑生命力共鸣的‘异质同构场’。", "论述二（古澹时间）：反好莱坞的快节奏剪辑，以凝滞长镜头捕捉岁月与物质的磨损，呈现‘拙朴’的大道。", "论述三（虚静视听）：声音留白、风声流水，在视听减法中实现直见性灵的意境升华。", "总结：枯槁美学是中国艺术电影实现‘创造性转化与创新性发展’的东方美学样本。"]}}, {"id": "p05_chen_yishui_guoman_renaissance", "title": "“国漫复兴”之路：新时代中国动画电影的产业格局与文化位置", "author": "陈亦水", "institution": "北京师范大学艺术与传媒学院副教授", "journal": "《当代电影》2026年第7期", "category_id": "cat_auteur_theory", "category_name": "国漫复兴、影像本体与视听批评", "tags": ["国漫复兴", "新时代中国动画电影", "产业格局", "文化自觉", "技术美学", "情动叙事", "神话重述"], "core_thesis": "新时代中国动画电影经历了从‘破冰探索’、‘工业崛起’到‘多元深耕’的三个阶段，凭借自主技术美学创新与传统文化再功能化书写，建构起具有文化自觉的民族影像体系，但仍需破解出海传播与题材同质化困境。", "theoretical_terms": ["国漫复兴三阶段（破冰探索、工业化跃升、多元深耕）", "传统文化的再功能化书写（Refunctionalization of Tradition）", "动画影像装置（Animation Cinematic Apparatus）", "情动叙事与情动理论（Affective Narrative & Affect Theory）", "文化位置（Cultural Location）与文化自觉（Cultural Self-awareness）", "新神话宇宙（New Mythological Universe）", "跨媒介文化IP链条"], "analytical_framework": [{"section": "一、产业博兴：新时代中国动画的三个发展阶段与格局", "point": "（1）2015-2018破冰期（《大圣归来》激活成人向市场）；（2）2019-2022工业跃升期（《哪吒之魔童降世》突破50亿票房，确立现代工业生产管线）；（3）2023至今多元深耕期（《长安三万里》《深海》在诗意美学与前沿技术上双向拓展）。"}, {"section": "二、审美创新：技术自立与传统再造", "point": "从盲目模仿好莱坞/皮克斯的三维写实与日漫二次元，走向技术美学的自主创新（如《深海》粒子水墨技术、《落凡尘》宋代刺绣与星宿视觉体系）；传统神话不再是简单的符号挪用，而是结合现代个体焦虑进行‘再功能化’当代隐喻表达。"}, {"section": "三、文化自觉：中国身份的全球确立与挑战", "point": "确立从被动接受到主动叙事的‘文化主体性’；反思当前‘神话IP扎堆反噬原创力’的题材瓶颈，以及面向海外市场时的文化折扣与编码壁垒。"}], "golden_quotes": ["新时代中国动画电影的‘国漫复兴’绝非单纯的票房数字奇迹，而是一场涵盖产业体系重构、技术美学自立与民族文化自觉的深刻文化实践。", "传统文化的现代转化绝非对古籍神话的机械搬演，而是通过‘再功能化书写’，将古老母题嫁接于当代青年的个体尊严、代际冲突与存在困惑之中。", "《深海》的粒子水墨技术与《长安三万里》的唐诗情境，标志着国产动画从对好莱坞写实范式的被动追随，升华至以数字技术激活东方写意意境的美学自信。", "动画影像不仅是视觉再现工具，更是一种作为情感发生器与意义生产场的‘情动装置’，通过高烈度视听体验实现跨越圈层的文化共振。", "国漫的未来进路，在于走出对传统神话IP的过度依赖与路径依赖，在现实题材开拓与全球跨文化传播中确立清晰而坚实的现代中国文化位置。"], "case_studies": ["《西游记之大圣归来》《哪吒之魔童降世》《姜子牙》新神话宇宙", "《深海》粒子水墨技术与抑郁心理的情动外化", "《长安三万里》高适与李白的双雄史诗叙事与诗歌群像", "《落凡尘》《白蛇：浮生》的东方浪漫主义转译"], "essay_application": {"applicable_questions": ["论新时代中国动画电影的‘美学突破’与‘工业化进程’", "评析中国传统神话资源的当代电影改编热潮（得与失）", "结合具体作品论述‘中华优秀传统文化的创造性转化与创新性发展’"], "thesis_angle": "将国漫复兴总结为‘工业化筑基 + 传统再功能化立魂 + 技术美学自立成形’，辩证指出其在赢得国内高口碑的同时，必须警惕题材同质化和跨文化传播瓶颈。", "argument_blueprint": ["引言：勾勒国漫从‘学童代步工具’到‘国民文化事件’的跨越，点题‘文化位置’与‘情动共振’。", "分论一（工业化升级）：从作坊式探索到模块化工业管线，建立中国动画自己的生产基石。", "分论二（美学自立）：走出好莱坞迪士尼/皮克斯单一范式，开创粒子水墨、诗画融合等东方数字技术美学。", "分论三（传统重构）：‘再功能化’机制——以现代人文精神重新阐释‘逆天改命’与‘家国苍生’，击中当代青年心理。", "分论四（反思与进路）：打破神话IP内卷，拓展现实主义维度，破除海外传播‘文化折损’。"]}}, {"id": "p06_chen_xiaoyun_zhua_tiewu", "title": "《抓特务》：反特叙事、记忆再现与日常生活史", "author": "陈晓云", "institution": "北京电影学院艺术学专委会主任、教授、博士生导师", "journal": "《当代电影》2026年第7期", "category_id": "cat_auteur_theory", "category_name": "国漫复兴、影像本体与视听批评", "tags": ["《抓特务》", "冯小刚", "反特叙事", "历史记忆", "日常生活史", "微观史学", "类型片重塑"], "core_thesis": "冯小刚电影《抓特务》表面上借用了反特片的悬疑类型外壳，实则以微观史学和日常生活史的视角消解了经典敌我两极对立的宏大叙事，将几十年的时代历史风云沉淀于柴米油盐、人情纠葛与个体命运的荒诞沧桑之中。", "theoretical_terms": ["反特叙事（Counter-espionage Narrative）的类型移位", "日常生活史（Alltagsgeschichte / History of Everyday Life）", "微观史学（Microhistory）视角的介入", "集体记忆（Collective Memory）与个体创伤", "类型反讽与类型解构（Deconstruction of Genre）", "冷战政治修辞的平民化消解"], "analytical_framework": [{"section": "一、从《无悔追踪》到《抓特务》：文本谱系与代际对话", "point": "追溯该题材与90年代经典电视剧《无悔追踪》的互文关联，探讨从电视剧到电影的篇幅压缩与作者风格植入。"}, {"section": "二、反特故事表象下的日常生活史：叙事重心的颠覆", "point": "传统反特片以斗智斗勇、敌我破案为核心，而《抓特务》中‘抓’这一警匪/政治动作被日常琐屑生活不断稀释；警察肖大力与特务冯静波在胡同大杂院中比邻而居四十年，抓捕变成了共同生活的柴米油盐伴随，政治博弈被沉淀为人性的温情与叹息。"}, {"section": "三、作为历史记忆的‘反特片’：时代反思与创伤抚慰", "point": "反特片从一种意识形态狂欢的宣教工具，转型为安放个体历史记忆与反思时代荒诞的文化容器。"}], "golden_quotes": ["《抓特务》并不是一部传统的或者典型的‘反特片’，而是借反特叙事的外壳，讲述了一段跨越数十年的当代中国日常生活史。", "在漫长的岁月流逝中，宏大的政治敌我对立被消解在柴米油盐的琐碎日常与烟火气息之中，‘抓与逃’的紧张对抗最终异化为两个孤独个体的彼此依存与精神守望。", "历史往往以宏大事件被载入史册，但唯有通过日常生活史的显微镜，我们才能看清时代惊涛骇浪在普通人身体与情感上刻下的真实伤痕。", "影片用温情而略带荒诞的笔触解构了传统类型片的二元对立范式，完成了对历史记忆由‘政治神话’向‘人道主义生命沉思’的叙事突围。", "当特务不再是脸谱化的反派，当抓捕变成了横跨半个世纪的执念与相伴，电影最终呈现的是历史车轮辗轧之下生命的无奈与尊严。"], "case_studies": ["冯小刚导演《抓特务》（雷佳音、胡歌主演）", "电视剧《无悔追踪》（王志文、刘佩琦经典之作）", "经典十七年反特电影如《羊城暗哨》《国庆十点钟》"], "essay_application": {"applicable_questions": ["论述当代中国类型电影的‘去类型化’与本土化突围", "分析日常生活史与微观叙事对中国历史题材电影的重构", "评析新世纪以来冯小刚电影作者风格与历史叙事的演进"], "thesis_angle": "阐释类型外壳与日常生活史内核的奇妙张力。指出当代影视不再迷恋非黑即白的意识形态脸谱，而是用‘微观日常’解构‘宏大对立’，展现更具包容性的人性复杂性与历史深度。", "argument_blueprint": ["立论：类型外壳的‘名实分离’——反特只是引子，日常生活史才是本体。", "机制一：空间的内倾化——从悬疑案发现场转移到胡同大院的锅碗瓢盆，以烟火气消解政治坚冰。", "机制二：时间的拉长与钝化——四十年日常的并置，使敌对关系演变为亦敌亦友、甚至惺惺相惜的人性羁绊。", "机制三：记忆的复调重构——个体生命体验对官方宏大历史叙事的微观补充与人文观照。", "结语：中国电影走向成熟的标志之一，就是有能力在激荡的时代记忆中安放普通人的日常温度。"]}}, {"id": "p07_fan_zhizhong_long_restaurant", "title": "《欢迎来龙餐馆》：拼贴式的类型符码与平民化的拯救叙事", "author": "范志忠", "institution": "浙江大学传媒与国际文化学院求是特聘教授、博士生导师", "journal": "《当代电影》2026年第8期", "category_id": "cat_mainstream", "category_name": "新主流大片与新大众文艺", "tags": ["《欢迎来龙餐馆》", "文牧野", "小人物三部曲", "拼贴式类型符码", "美食符号", "平民化拯救叙事", "跨文化认同"], "core_thesis": "文牧野‘小人物三部曲’以《欢迎来龙餐馆》收官，影片通过动作、喜剧、战乱救援等多重类型符码的拼贴，以美食为跨文化叙事枢纽，打造了具有强烈现实质感与共情力量的平民化拯救叙事。", "theoretical_terms": ["主题关联型三部曲（Thematic Trilogy）", "拼贴式类型符码（Collage of Genre Codes）", "作为叙事枢纽的美食符号（Gastronomy as Narrative Hub）", "平民化的拯救叙事（Grassroots Salvation Narrative）", "小人物的主体性赋权（Empowerment of the Underdog）", "跨文化情感黏合剂"], "analytical_framework": [{"section": "一、拼贴式的类型话语：跨类型杂糅策略", "point": "文牧野打破单一类型边界，将中东战乱背景下的撤侨/救援危机，与中国市井家庭伦理、荒诞喜剧、海外动作冒险巧妙拼贴，形成具有高张力与大众亲和力的杂糅类型机制。"}, {"section": "二、作为叙事枢纽的美食符号：超越语言的文化认同", "point": "中餐烹饪不仅是推动情节发展的支点，更是化解文化仇恨、连接不同国族与阶层的人性中介，美食成为乱世中抚慰灵魂的跨文化桥梁。"}, {"section": "三、平民化的拯救叙事：小人物的凡人英雄主义", "point": "区别于好莱坞超级英雄的个人神话或吴京式铁血军人的无敌光环，主角厨师徐福是个充满怯懦、自私却在极限危机中迸发善良本能的‘草根平民’，其拯救不是武力征服，而是凡人互助与生命守望。"}], "golden_quotes": ["文牧野的‘小人物三部曲’（《我不是药神》《奇迹·笨小孩》《欢迎来龙餐馆》）形成了以平民视角观照时代激变、以现实关怀重构主流价值的独特创作标识。", "《欢迎来龙餐馆》并非好莱坞式超级英雄的独角戏，而是通过拼贴式的类型符码，将宏大的撤侨与跨国战乱叙事，降维并落地为充满烟火气与人间冷暖的平民拯救传奇。", "在中东战火纷飞的绝境中，升腾着中国家常菜热气的小餐馆化身为庇护生灵的方舟，美食超越了地缘政治的藩篱，成为抚慰恐惧、唤醒善念的跨文化世界语。", "凡人善举所蕴含的崇高感，往往比全知全能的超级力量更能穿透人心；小人物在恐惧中的颤抖与抉择，确立了新主流叙事中最可信赖的情感锚点。", "这种平民化拯救叙事，标志着中国主流电影从外在力量的宏大彰显，走向对普通人内心良知与伦理韧性的深沉礼赞。"], "case_studies": ["文牧野“小人物三部曲”：《我不是药神》《奇迹·笨小孩》《欢迎来龙餐馆》", "《战狼2》《万里归途》等跨国撤侨题材的叙事模式对比", "李安《饮食男女》等电影中美食符号作为情感聚合器的功能对比"], "essay_application": {"applicable_questions": ["论新时代中国电影‘小人物、大时代’（以人民为中心）的创作导向与叙事模式", "分析当代国产电影对‘英雄主义’的多重书写与转型", "论类型杂糅（拼贴式类型符码）在商业电影创作中的应用策略"], "thesis_angle": "对比以国家超级特工为代表的‘铁血硬汉英雄’，阐明‘平民草根英雄’在可信度、共情力与大众心理代入上的独特优势，证明‘现实主义温度+平民拯救’是主流大片长盛不衰的法宝。", "argument_blueprint": ["立论点题：文牧野三部曲代表了新主流电影‘平民视角与类型化融合’的成熟形态。", "分论一：类型符码的拼贴——以喜剧调味残酷，以动作承载危机，使严肃题材具备大众观赏性。", "分论二：文化意象的降维——用‘舌尖上的家园与人间烟火’替代硬核武器对决，赋予国际救援深刻的人文温情。", "分论三：英雄主义的凡人化——正义不是神性赐予，而是脆弱个体的守望相助，深化了‘以人民为中心’的价值取向。", "结语：当主流大片真正扎根于平民的喜怒哀乐，它所激发的家国共鸣才最富生命力。"]}}, {"id": "p08_rao_shuguang_sublime_paradigm", "title": "新主流大片“崇高”范式的构建路径：从家国叙事到人类命运共同体的美学重塑——基于“共同体美学”理论的系统考察", "author": "饶曙光、陈中国", "institution": "饶曙光（中国电影评论学会会长、二级教授）；陈中国（北京电影学院博士研究生）", "journal": "《当代电影》2026年第6期", "category_id": "cat_mainstream", "category_name": "新主流大片与新大众文艺", "tags": ["新主流大片", "共同体美学", "人类命运共同体", "家国崇高", "共同体崇高", "美学范式革命", "全球想象"], "core_thesis": "中国新主流大片经历了从建立在民族国家认同之上的‘家国崇高’，向以全人类共同命运为关怀的‘共同体崇高’的美学范式革命；这一升维重构了中国电影的情感结构、全球想象与文明互鉴维度，推动了‘共同体美学’理论的重大拓展。", "theoretical_terms": ["共同体美学（Community Aesthetics）", "家国崇高（National-Familial Sublime）", "共同体崇高（Community Sublime / Global Destiny Sublime）", "伦理崇高 vs 威严崇高 vs 命运崇高", "美学范式革命（Paradigm Shift）", "全球想象力（Global Imagination）与人类文明新形态", "朗吉努斯-康德-利奥塔崇高理论谱系"], "analytical_framework": [{"section": "一、崇高范畴的哲学溯源与美学机制", "point": "梳理朗吉努斯的灵魂伟大、康德的理性胜利与道德律令、利奥塔的不可表现之物，指出崇高能通过混杂痛感的愉悦，完成对个体与国家群体的精神凝聚。"}, {"section": "二、家国崇高及其美学特征：新主流大片的第一阶段", "point": "以《建国大业》《战狼2》《长津湖》为代表，依托英雄个体的伦理奉献、国家力量与民族意志建立‘家国崇高’，核心在于唤醒民族历史记忆与国家认同。"}, {"section": "三、崇高升维的实践路径：迈向‘人类命运共同体’", "point": "随着中国从‘全球体系融入者’转向‘文明引领者’，单一国族对抗叙事已无法满足全球命题；以《流浪地球》系列为代表，叙事动力转向跨国族协作、全人类面对宇宙危机时的守望相助。"}, {"section": "四、共同体崇高的三重维度：生态、人类、文明", "point": "（1）生态维度的敬畏崇高（人与自然的生命契约）；（2）人类维度的利他崇高（牺牲当下为了后世‘延续人类文明的火种’）；（3）文明维度的包容崇高（移山计划与跨文明对话，打破西方诺亚方舟精英逃难逻辑）。"}, {"section": "五、文明价值与全球意义：中国电影话语的自主构建", "point": "共同体崇高为全球视听叙事提供了超越好莱坞个人英雄主义与西方冷战零和博弈的新文明哲学范本。"}], "golden_quotes": ["新主流大片‘崇高’美学的转向，并非简单的题材拓展，而是一次重构审美情感结构与共同体想象边界的美学范式革命，标志着中国主流电影叙事迈入新的历史阶段。", "从建立在民族国家认同之上的‘家国崇高’，升维至以人类整体命运为关怀的‘共同体崇高’，体现了中国电影从本土精神凝聚走向全球文明引领的自觉担当。", "在《流浪地球》等影片中，面对地球停转与太阳氦闪的终极灾难，‘带着家园去流浪’不仅是东方愚公移山精神的科幻外化，更是对全人类休戚与共命运的深沉体认。", "西方好莱坞的末日叙事往往滑向极少数精英登船的‘诺亚方舟’排他主义，而共同体崇高倡导的是全人类不分国界、并肩抗争的集体利他主义与文明接力。", "共同体美学理论的持续深化，为新主流大片提供了兼顾国家意志、市场规律与全人类普遍价值的美学支点，构筑起面向世界的中国电影话语新范式。"], "case_studies": ["《流浪地球》系列（移山计划、五十岁以上航天员出列、饱和式救援）", "《长津湖》《战狼2》《红海行动》《建国大业》家国崇高范式", "好莱坞科幻末日片《2012》《星际穿越》《彗星撞地球》对照"], "essay_application": {"applicable_questions": ["论述新时代中国‘新主流大片’的美学流变与价值重构", "如何理解饶曙光提出的‘共同体美学’理论及其对中国电影的指导意义？", "从《流浪地球》等影片看中国科幻电影如何书写‘人类命运共同体’理念"], "thesis_angle": "电影理论论述题终极核武器！必须熟练掌握饶曙光‘共同体美学’的核心脉络，精准使用‘家国崇高到共同体崇高’的术语对新主流电影近二十年历程进行分期与美学升华。", "argument_blueprint": ["理论奠基：引入‘共同体美学’分析框架与‘崇高’的哲学演进（朗吉努斯-康德）。", "历史考察（立足本土）：‘家国崇高’的建构——聚焦民族独立与国家富强，在革命与保家卫国中凝聚国民意志（《战狼》《长津湖》）。", "范式革命（面向世界）：‘共同体崇高’的升维——在终极生存危机中，将关怀视角扩展至全人类文明存续（《流浪地球》）。", "中西对话：对比好莱坞‘个人英雄/精英方舟’，阐发中国电影‘集体主义协作/愚公移山携家远行’的东方伦理超越性。", "结论：新主流电影通过崇高范式的升华，成功将中国智慧融入全球人类文明叙事体系。"]}}, {"id": "p09_wang_yichuan_new_mass_culture", "title": "新大众文艺与电影的新大众性", "author": "王一川、杨天东", "institution": "王一川（北京师范大学文艺学研究中心资深教授）；杨天东（《当代电影》副研究员、编辑）", "journal": "《当代电影》2026年第8期", "category_id": "cat_mainstream", "category_name": "新主流大片与新大众文艺", "tags": ["新大众文艺", "电影新大众性", "复合传播场", "公共情感", "重返大众", "经验成形", "批评尺度"], "core_thesis": "在智能媒介与移动互联时代，大众由被动的受众转变为具有参与性与生产力的新大众；电影必须超越单一票房与流量迷思，建构集‘复合传播场、公共情感共振与大众经验审美转化’于一体的‘电影新大众性’。", "theoretical_terms": ["新大众文艺（New Mass Literature and Art）", "电影的新大众性（New Mass Character of Cinema）", "从观看到参与（From Viewing to Participatory Spectatorship）", "复合传播场（Composite Communication Field）", "经验成形（Forming and Shaping of Mass Experience）", "超越流量的批评尺度（Critical Standards Beyond Traffic）", "公共情感共同体"], "analytical_framework": [{"section": "一、重返大众：历史延续与当代转向", "point": "梳理从延安文艺座谈会‘为人民大众’、十七年工农兵文艺到商品经济大众文化，再到今天数字智能平台下‘新大众’的历史演进，指出大众的身份已从被教育者、消费者转变为‘共创者’。"}, {"section": "二、从观看到参与：新大众的意义生成机制", "point": "观众不再只是影院暗室中的被动凝视者，而是通过二创剪辑、弹幕弹评、社群话题发酵，主动参与到电影文本的意义建构与生命延长之中。"}, {"section": "三、银幕内外：复合传播与边界重构", "point": "影院大银幕不再是视听体验的终点，而是与短视频切片、社交平台热搜、直播路演交织共振的复合场域，电影生态呈现破圈与重组。"}, {"section": "四、经验成形：大众生活的审美转化", "point": "新大众性并非顺从庸俗低趣，而是将当下普通大众在时代转型中未被命名、零散模糊的生存痛感与情感渴望，通过精湛艺术语言转化为具有审美价值的‘成形经验’。"}, {"section": "五、超越流量：批评尺度的重构", "point": "警惕将‘大众性’等同于‘网络流量与算法点赞’，确立兼顾精神引领、审美规范与大众心理深层契合的马克思主义文艺批评新标准。"}], "golden_quotes": ["新大众文艺的兴起促使我们重新反思电影与大众的关系，电影的新大众性既是对人民性传统的当代承续，也是对数字化、平台化互动机制的美学回应。", "大众不再是抽象被动的受众群体，而是带着鲜活生活体验深度介入电影再生产与意义诠释的‘参与式主体’。", "真正的电影新大众性，不在于迎合算法制造的瞬时情绪狂欢，而在于能否将大众日常经验中散碎的痛痒转化为深刻澄明的审美形式，完成‘经验的艺术成形’。", "在短视频切片与社交热搜重构银幕边界的今天，电影必须在‘下沉破圈’与‘精神向上引领’之间保持动态平衡，防止大众性沦落为低俗的流量平庸。", "超越流量的批评尺度，要求电影批评既倾听大众最真实的脉搏跳动，又以坚实的人文理性照亮大众精神升华的可能路径。"], "case_studies": ["《热辣滚烫》《孤注一掷》《年会不能停！》等现象级电影的社会话题破圈与情绪发酵", "抖音短视频二次创作对《隐入尘烟》等小众文艺片票房的逆袭赋能", "经典工农兵电影与新时期大众通俗电影的历史回溯"], "essay_application": {"applicable_questions": ["如何理解新时代中国电影的‘人民性’与‘新大众性’？", "论社交媒体、短视频时代电影传播机制的重构与受众主体性变迁", "评析近年来‘话题电影’（社会情绪共振型电影）的爆火与评价标准"], "thesis_angle": "用王一川的‘新大众文艺与新大众性’为‘话题电影’与‘下沉市场现象’提供高度学理化的论证框架，指出优秀电影的本质是完成对大众生存痛点的‘经验成形’，而非单纯媚俗迎合算法。", "argument_blueprint": ["概念辨析：区分‘旧大众文化（单向灌输或商业消费）’与‘新大众文艺（双向互动与共情共创）’。", "传播机制重构：影院空间与网络公域的‘复合传播场’，观众从‘被动目击者’升级为‘二创传播者’。", "核心美学任务——‘经验成形’：分析《年会不能停！》等影片如何将职场打工人的荒诞焦虑提炼为经典大众叙事。", "理性反思与批评尺度：警惕‘流量绑架艺术’、‘情绪算法投喂’，呼唤具备思想引领力的新大众批评。", "总结：以新大众性赋能电影高质量发展，达成艺术品格与人民意愿的高水准统一。"]}}, {"id": "p10_xu_haoyue_ai_choukashi", "title": "新大众文艺的创作悖论：基于AI短剧抽卡师劳动主体性的考察", "author": "徐皓月、张毅山", "institution": "中国海洋大学文学与新闻传播学院新闻与传播学系", "journal": "《当代电影》2026年第6期", "category_id": "cat_ai_media", "category_name": "AIGC与数智媒介重构", "tags": ["AI微短剧", "AI短剧抽卡师", "劳动过程理论", "平台资本主义", "劳动主体性", "创作悖论", "均值影像"], "core_thesis": "基于对20位AI短剧抽卡师的深度田野访谈，揭示出生成式AI微短剧背后的三重创作悖论：主体层面的技术赋权与劳动控制异化、内容层面的均值影像与鲜活经验脱节、价值层面的商业奇观与社会效益背离。", "theoretical_terms": ["AI短剧抽卡师（AI Gacha Operator / Prompt Operator）", "劳动主体性（Labor Subjectivity）", "劳动过程理论（Labor Process Theory）", "平台资本主义与算法控制（Platform Capitalism & Algorithmic Control）", "抽卡机制（Gacha / Stochastic Output Mechanism）", "均值影像（Mean/Averaged Imagery）", "三重创作悖论（Triple Creative Paradoxes）"], "analytical_framework": [{"section": "一、创作主体悖论：技术赋权表象下的劳动控制与异化", "point": "表面上AI让没有受过影视专业训练的青年成为‘创作者’，实则创作者沦为流水线‘抽卡工’；他们的工作被分割为不断调试关键词、海量抽卡试错、去除畸变的机械工序，创意被算法随机性和平台KPI严格规训与去技能化（Deskilling）。"}, {"section": "二、创作内容悖论：均值影像脱离鲜活生活经验", "point": "大模型本质是历史海量图集的统计均值归纳，生成的是光鲜亮丽却缺乏在地性、细节感与生命质感的‘塑料感均值影像’；创作者只能按照套路拼凑豪门、穿越、打脸桥段，真正鲜活的现实主义民间经验被彻底遮蔽。"}, {"section": "三、创作价值悖论：商业技术奇观与社会效益背离", "point": "产业资本追求‘低成本极速回本’，利用AI炮制高感官刺激的粗糙内容，算法投喂加剧文化快餐化与审美降级，背离了新大众文艺服务人民、丰富精神世界的初衷。"}], "golden_quotes": ["所谓‘抽卡’，揭示了人工智能生成机制骨子里的随机性与博弈性；AI短剧创作者在获得‘人人皆可导演’的虚幻赋权感时，其实正沦为向算法黑箱祈求满意成果的‘数字计件工’。", "抽卡师的创造性劳动被高度标准化与切片化，艺术灵韵被物化为可计算的提示词参数，遭遇了深度‘去技能化’与劳动异化的现实困境。", "AI大模型训练出的‘均值影像’拥有近乎完美的质感光影，却因缺失具身生存的粗粝与真实，导致影像内容悬浮于真切的人间生活之上。", "当生成技术极大地压缩了生产成本，劣质内容的规模化倾销反而挤压了精品原创的生存空间，造成‘高效率生产平庸’的文化反讽。", "要让数智媒介真正赋能新大众文艺，必须将创作者从单调的提示词试错中解放出来，引导影像实践重新扎根于人民大众火热而独特的现实经验。"], "case_studies": ["2026年国内超1.9万单日招聘的AI短剧从业者田野实录", "头部AI短剧《白狐》《山海奇遇》等的提示词制作管线", "Midjourney/Runway/Kling等在短剧流水线中的批量出图机制"], "essay_application": {"applicable_questions": ["论生成式AI对影视劳动者（编剧、美术、导演）主体地位的冲击与重塑", "评析当前微短剧与AI短剧繁荣背后的隐忧与反思", "从马克思主义劳动价值论与异化理论看数字时代的人机关系"], "thesis_angle": "极具学术批判深度的切入视角！跳出单纯赞美AI提质增效的‘技术狂热’，运用社会学、政治经济学与劳动过程理论，无情剖析‘抽卡式创作’背后的劳工异化与内容空心化，极易博得阅卷老师青睐。", "argument_blueprint": ["破题立论：揭示现象——AI短剧狂欢下的底层隐忧，提出‘三重创作悖论’分析模型。", "论证一（主体维度的异化）：‘赋权’反成‘规训’，创作者的主体审美被降维为无休止的概率抽卡试错（去技能化）。", "论证二（文本维度的空心化）：‘均值影像’的审美陷阱——算法的统计归纳消解了现实经验的异质性与真切感。", "论证三（产业与价值维度的背离）：资本逻辑主导下的低俗化快餐流水线，背离了人民文艺的高质量要求。", "总结：警惕技术拜物教，呼唤人的主体性觉醒与人文价值在算法工业中的重新锚定。"]}}, {"id": "p11_cai_xiaofang_fragmentation_aesthetic", "title": "碎片化美学与电影叙事的未来——短剧作为文化样本", "author": "蔡晓芳", "institution": "北京师范大学艺术与传媒学院副教授", "journal": "《当代电影》2026年第5期", "category_id": "cat_short_drama", "category_name": "短剧崛起与后电影时代", "tags": ["短剧", "电影叙事", "碎片化美学", "情感装置", "后电影时代", "触发机制", "注意力经济"], "core_thesis": "短剧作为后电影时代的典型文化样本，标志着叙事动力从传统艺术的‘内驱激发’转向算法与心理层面的‘即时触发’；其开创的‘碎片化美学’重塑了受众的感知结构，迫使未来长片电影叙事必须在吸收微视听交互基因的同时重构深层审美体验。", "theoretical_terms": ["后电影时代（Post-cinema Era）", "碎片化美学（Aesthetics of Fragmentation）", "从‘激发’（Arousal）转向‘触发’（Triggering）", "情感装置（Emotional Apparatus）", "算法化爽点装配（Algorithmic Pleasure Assembly）", "微叙事（Micro-narrative）与高频微高潮", "认知悬搁与注意力离散"], "analytical_framework": [{"section": "一、从‘激发’到‘触发’：叙事动力的根本位移", "point": "传统电影叙事遵循长周期的因果铺垫与人物心理内驱（激发）；而短剧是围绕用户停留率算法搭建的‘情绪条件反射装置’，依靠高频度、前置性的反转、打脸、悬念直接‘触发’多巴胺分泌。"}, {"section": "二、碎片化美学：叙事结构、时空压缩与意义断裂", "point": "单集1-2分钟的体量摧毁了经典的整全性时空，视听叙事呈现高度模块化、原子化和即插即用；意义不再来自整体的哲学闭环，而是瞬间爆发的情绪快感碎片。"}, {"section": "三、视觉文化之肌底：微短剧对电影未来的双重建构", "point": "（1）消极侵蚀：加剧大众深度注意力的涣散与对长叙事耐心匮乏；（2）积极启示：倒逼电影探索非线性叙事、多线交织、微型高潮与沉浸交互的新语法，推动长短影像的交融共生。"}], "golden_quotes": ["短剧的崛起标志着叙事动力从传统艺术内驱的‘激发’转向由技术社会学与算法所主导的‘即时触发’。", "在碎片化美学的规训下，叙事不再追求亚里士多德式的完整有机体，而是演化为由高密度情绪断片紧密拼合的数字情感装置。", "微短剧通过剥离传统电影冗长的心境铺垫，以近乎野蛮的效率直奔欲望内核，创造了一种高刺激、低认知负荷的‘速食狂喜’。", "短剧不仅是一种商业变现模式，更是后电影时代人类注意力被屏幕割裂、知觉系统发生结构性重组的文化病候与先锋样本。", "面对碎片化美学的激进冲击，未来的电影叙事既不可闭目塞听固步自封，亦不可全盘妥协自我矮化，而应在吸收微视听叙事张力的同时，坚守大银幕不可替代的时空造境与生命沉潜。"], "case_studies": ["竖屏微短剧爆款叙事法则（3秒入戏、15秒反转、集尾留钩子）", "抖音、快手等平台短剧向电影质感升级尝试", "院线电影如《孤注一掷》《年会不能停！》借鉴短视频/短剧节奏与情绪点的演进"], "essay_application": {"applicable_questions": ["论述微短剧对传统电影叙事与视听语言的挑战与启示", "分析‘碎片化时代’大众感知模式的变迁对影视艺术的影响", "如何看待后电影时代长视频与短视频、大银幕与微屏幕的竞合关系？"], "thesis_angle": "用‘激发’向‘触发’的叙事动力位移，以及‘碎片化美学作为情感装置’这一锐利理论视角，将短剧上升到后电影时代文化认识论层面，避免流于表面吐槽短剧低俗。", "argument_blueprint": ["核心论点提出：短剧并非简单的‘电影缩水版’，而是诞生于后电影媒介生态的‘碎片化情感装置’。", "机制解析（从激发到触发）：传统三段式叙事在算法倒逼下瓦解，代之以高频反转与多巴胺即时满足机制。", "知觉重构（碎片化美学特征）：时空被极致压缩、因果被情绪链条取代，形成原子化视听体验。", "行业回响与辩证共生：分析院线电影吸收‘短剧化微高潮与社会热点挂钩’的趋势与警惕过度碎片化导致的意义消解。", "终论：电影的终极自救是发挥其‘精神安顿与完整时空造境’的不可替代性。"]}}, {"id": "p12_fang_zhaoli_mobile_screen_aesthetic", "title": "移动刷屏时代电影画面格调的坚守与诠释", "author": "方兆力、唐卫", "institution": "方兆力（北京电影学院基地特约研究员）；唐卫（东华大学服装与艺术设计学院副教授）", "journal": "《当代电影》2026年第5期", "category_id": "cat_short_drama", "category_name": "短剧崛起与后电影时代", "tags": ["电影画面格调", "微短剧", "银幕与屏幕", "空间秩序", "多维融合", "景深与构图", "视听本体"], "core_thesis": "在移动微短剧‘内卷’传统电影的刷屏时代，电影必须在‘银幕/屏幕物理场域’、‘影像空间秩序’与‘画面多维融合’三个维度坚守其独特的画面格调，以横屏大银幕的纵深感、光影层次与仪式感抵抗竖屏微屏的扁平与速食化。", "theoretical_terms": ["电影画面格调（Cinematic Visual Tone / Poise）", "银幕场域 vs 移动屏幕（Theatrical Screen vs Mobile Screen）", "影像空间秩序（Cinematographic Spatial Order）", "多维融合（Multidimensional Fusion）", "视域扁平化与竖屏局限（Flat Visual Field of Vertical Framing）", "影院黑屋子的仪式沉浸（Cinematic Dark Room Immersion）"], "analytical_framework": [{"section": "一、银幕/屏幕的比较：物理介质与接受场域的断裂", "point": "影院大银幕具有压迫性与包裹感，构成公共仪式的超验场域；移动竖屏是手持私人设备，伴随随时打断与滑动的轻浮状态，视觉注意力呈现游离态。"}, {"section": "二、影像空间秩序的比较：横向广度与深层景深 vs 纵向局限与扁平特写", "point": "传统电影依赖横向宽银幕（16:9/2.35:1）构建复杂群像调度、环境纵深与光影虚实；竖屏微短剧（9:16）严重受限，沦为大特写、正反打与扁平前景的面孔挤压，丧失了电影作为空间艺术的厚度。"}, {"section": "三、画面内部多维融合的比较：影调、色彩与隐喻系统的建构", "point": "电影画面是色彩心理学、影调过渡、美术造型与运动摄影的高度综合体；而微短剧普遍采用高饱和、高亮、扁平布光，缺乏意境留白与美学韵味。"}], "golden_quotes": ["电影画面的格调，是创作者精神气象与哲学思考在光影与空间中的具象沉淀，是抵抗算法粗鄙化侵蚀的坚固堡垒。", "影院大银幕通过幽暗空间中的光束投射，建构起神圣的群体凝视与心理仪式；而掌中移动微屏则将观影矮化为手指随意划动的碎片化消费。", "横向银幕赋予电影宽广的地平线与丰富复杂的空间纵深，而竖向屏幕的狭窄视域不可避免地导致构图平庸化与环境信息的剧烈流失。", "在微短剧以廉价的高亮平光和机械的面孔特写填满屏幕时，电影对阴影、层次与虚实留白的苛求，守护了视听艺术最具魅力的神秘感与呼吸感。", "坚守电影画面格调，绝非对旧技术的盲目怀旧，而是在浮躁喧嚣的刷屏浪潮中，为人类守护一处沉潜凝神、观照世界的审美净土。"], "case_studies": ["宽银幕史诗巨制（如《奥本海默》《沙丘》《封神第一部》）的宏大画幅与空间秩序", "抖音、微信视频号主流微短剧的竖屏单调大特写构图", "经典胶片影调在数智调色时代的风格坚守"], "essay_application": {"applicable_questions": ["论影院大银幕（横屏）与移动微屏幕（竖屏）的视听语言本体差异", "移动互联网时代电影艺术如何守护自身的‘电影感’（Cinematic Quality）？", "分析微短剧视听语言的局限性及其对传统电影工业的启示"], "thesis_angle": "紧扣‘电影本体论’与视听形式主义（画面格调、空间秩序、景深多维融合），从物理介质、视听空间与文化仪式三方面构建坚固防线，阐发大银幕不可被手机屏幕取替的本体论根基。", "argument_blueprint": ["破题立论：提出面对移动微短剧‘时长与数量包围’，电影唯一的生存王道是‘格调与视听纵深的不可替代性’。", "论述一（场域与仪式）：银幕作为公共仪式（巴赞/波德维尔式沉浸） vs 屏幕作为私人随身滑屏（注意力涣散）。", "论述二（空间与调度）：横屏画幅提供的多层次景深调度与环境叙事 vs 竖屏构图导致的空间阉割与‘大头娃娃特写’局限。", "论述三（光影与多维融合）：电影用阴影、色彩留白塑造复杂心境 vs 短剧扁平光线追求刺目刺激。", "结语：以专业视听美学尊严坚守‘电影感’，守住人类大银幕的梦境殿堂。"]}}, {"id": "p13_li_ruihua_found_footage", "title": "缺席的在场：拾得影像实践的作者性重构", "author": "李瑞华", "institution": "北京联合大学应用文理学院副教授", "journal": "《当代电影》2026年第6期", "category_id": "cat_auteur_theory", "category_name": "国漫复兴、影像本体与视听批评", "tags": ["拾得影像", "Found Footage", "作者性", "编纂电影", "论文电影", "策展者-作者", "徐冰《蜻蜓之眼》", "数据库电影"], "core_thesis": "从杜尚的现成品到徐冰《蜻蜓之眼》的公共监控剪辑，‘拾得影像’实践颠覆了以实地拍摄为基础的传统作者论；在素材创作者‘缺席’的表象下，导演通过批判性引用、概念编排与数据库策展，重构出一种更为纯粹的思想性‘在场’——‘策展者-作者’。", "theoretical_terms": ["拾得影像（Found Footage / Archival Footage）", "缺席的在场（Presence in Absence）", "策展者-作者（Curator-as-Author / Assemblage Author）", "编纂电影与论文电影（Compilation Film & Essay Film）", "数据库时代的影像考古（Database Cinema & Image Archaeology）", "后现代拼贴与批判性引用（Critical Quotation）", "对监控资本主义与视觉机器的反思"], "analytical_framework": [{"section": "一、作为实践方法的拾得影像：从现成品到监控公共视频", "point": "回溯拾得影像的历史谱系：从先锋派对弃置胶片的重组，到杜尚现成品艺术（《泉》），再到数字时代对互联网公共视频、监控视频的海量收割与再加工。"}, {"section": "二、作者性的悖论：没有摄影师、没有演员的电影", "point": "以徐冰《蜻蜓之眼》为例：全片取自11000小时真实公共监控，无一帧实拍，看似传统创作者彻底‘缺席’，引发‘谁是作者’的本体论悖论。"}, {"section": "三、作者性的重构路径：批判性策展与思想在场", "point": "作者性从‘原始影像的物质创造者’升华为‘海量影像意义的策展者与解码者’。通过蒙太奇组接赋予现成影像以反思性，揭示算法规训、全景敞视监控与人类虚无生存状态，实现‘缺席者的思想在场’。"}], "golden_quotes": ["拾得影像实践打破了‘摄影机指向现实才拥有作者性’的神话，宣告了在海量影像垃圾堆中进行思想重组的‘策展者-作者’的诞生。", "在徐冰的《蜻蜓之眼》中，摄影机与拍摄者彻底缺席，但一种更庞大、更冷峻的作者思想却借由监控碎片的序列重组获得了幽灵般的强大在场。", "在数据库时代，影像生产早已不是稀缺行为，影像的滥觞反而导致了意义的遮蔽；拾得影像正是通过对现成视听的批判性引用与挪用，对图像泛滥的现代社会展开激进考古与哲学审讯。", "作者性不再依赖于天才般的原初创造，而彰显于在浩如烟海的数据库碎屑中提炼出时代症候、重塑文化秩序的编纂与策展意志。", "这种‘缺席的在场’，完成了后现代语境下对巴赞摄影本体论与古典作者论的双重超越与深刻反讽。"], "case_studies": ["徐冰《蜻蜓之眼》（纯监控视频剪辑剧情长片）", "杜尚达达主义现成品《泉》在影像领域的精神回响", "克里斯·马克《堤》《日月九曜》等论文电影经典", "短视频二创与混剪文化中的拾得影像属性"], "essay_application": {"applicable_questions": ["论数字时代电影‘作者论’（Auteur Theory）的解构与重构", "以徐冰《蜻蜓之眼》为例，谈谈‘拾得影像’（Found Footage）的先锋美学价值", "论蒙太奇与数据库剪辑在当代实验电影中的哲学转向"], "thesis_angle": "极高级的先锋艺术与理论论述题武器！用于回答关于‘作者性去中心化’、‘数据库电影’、‘实验电影与新纪录运动’的高难论述题，提出‘创作者物质性缺席，思想性策展在场’这一辩证命题。", "argument_blueprint": ["破题立论：借杜尚《泉》引出拾得影像的终极追问——当影像不是‘我’拍摄的，‘我’如何成为作者？", "解构古典作者论：巴赞式‘真实再现’神话被瓦解，传统导演的拍摄特权被数据库技术抹平。", "重构新作者论（策展者-作者）：通过批判性引用与蒙太奇拼贴，为冰冷的监控影像赋予反思当代生存困境的人文灵魂（徐冰案例）。", "媒介批判维度：从拾得影像反观当今大数据与算法监控社会的控制机制。", "结语：在影像泛滥的时代，最好的创造往往是对已有影像的大胆重思与思想重组。"]}}, {"id": "p14_gao_fan_qinglv_transmedia", "title": "跨媒介视域下电影《只此青绿》对传统美学的当代重构", "author": "高凡", "institution": "聊城大学传媒技术学院", "journal": "《今传媒》2026年第8期", "category_id": "cat_traditional", "category_name": "中国传统美学与东方诗学", "tags": ["《只此青绿》", "跨媒介叙事", "千里江山图", "传统美学", "符号转译", "双时空叙事", "家国情怀"], "core_thesis": "电影《只此青绿》依托‘宋画名作-舞台舞剧-大银幕电影’的三重跨媒介流转，以数字化视听语言完成对古典青绿山水意象的物质转译，并在双时空交错与集体匠人视角中，将家国情怀具象化为东方诗意视听奇观。", "theoretical_terms": ["跨媒介叙事（Transmedia Storytelling）", "意象重构与物质转译（Material Translation of Imagery）", "形神气韵（Form, Spirit, Vitality and Rhythm）的现代化", "双时空交错叙事（Dual Spatiotemporal Narrative）", "集体视角与匠人精神（Collective Perspective & Craftsman Spirit）", "写意美学的可触可感化"], "analytical_framework": [{"section": "一、符号再生：跨媒介转译下的意象重构", "point": "从北宋王希孟的静态设色绢本《千里江山图》，到舞剧演员的青绿肢体语言，再到电影运用景深、特写、运动运镜与粒子级光影渲染，让千年古画由‘平面凝固’升维为‘流动呼吸的生命体’。"}, {"section": "二、语境重构：多维驱动下的双时空叙事创新", "point": "电影打破单一历史线性叙述，构建当代文物研究员‘展卷人’与北宋少年画家‘王希孟’的心灵对望双时空；画卷不再是一件古董，而成为勾连古今中华文明的精神桥梁。"}, {"section": "三、价值落地：家国情怀的平民匠人群体表象", "point": "电影没有局限于王希孟个人的天才神话，而是将笔墨深情给予制绢、点粉、研石、织绫等千千万万无名古代工匠，把古典美学的宏大叙事转化为平民劳作的崇高献礼与中华血脉传承。"}], "golden_quotes": ["电影《只此青绿》以北宋《千里江山图》为文化母本，经由舞剧到电影的跨媒介转化，完成了对传统东方美学精神价值的当代重构。", "在跨媒介视域下，‘青绿’不再仅是一种矿物颜料与色彩视觉，而是被升华凝结为中华民族生命力与山河不朽的文化图腾。", "‘展卷人’与少年希孟的双时空凝望，实现了当代文明守望者与历史创造者跨越千年的心灵共振，以光影打破了历史的物理断隔。", "电影以深沉的目光凝视那些磨石、澄泥、制笔、织绢的平凡手工艺人，将古典美学的超逸灵秀深植于中国劳动人民扎实劳作的沃土之中。", "这种跨媒介实践为中华优秀传统文化的创造性转化与创新性发展树立了典范，展现了东方写意诗学在当代视听工业中的澎湃生机。"], "case_studies": ["电影《只此青绿》（周莉亚、韩真执导电影版）", "故宫博物院藏北宋王希孟《千里江山图》", "舞蹈诗剧《只此青绿》春晚破圈与舞台巡演"], "essay_application": {"applicable_questions": ["结合《只此青绿》等影片，论跨媒介改编对影视美学的重塑", "论述中国传统艺术（绘画、戏曲、舞蹈）向现代电影语言的创造性转化", "如何通过视听语言讲好‘文化传承与中华美学精神’？"], "thesis_angle": "作为‘传统文化双创（创造性转化与创新性发展）’的绝佳范例，提炼‘符号物质转译、双时空对话、无名匠人群像’三大支点，证明传统东方美学与现代高精视听工业的完美融合。", "argument_blueprint": ["引论：跨媒介视域切入——画-舞-影的三重递进跃迁。", "分论一（符号再造）：将静态国画‘三远法’与‘青绿设色’转化为动态镜头语言，实现古典气韵具象化。", "分论二（时空融通）：双时空架构（展卷人与希孟）打破历史壁垒，激活当下观众的历史共情与文明自豪感。", "分论三（价值重塑）：摒弃帝王叙事与纯文人自怜，以匠人劳作赋予东方美学以人民性与劳动之美。", "结语：以跨媒介视听赋能传统意象，展现中华美学走入当代的自强活力。"]}}, {"id": "p15_wu_sijia_kung_fu_panda", "title": "中国基因的美国蜕变——论《功夫熊猫》系列动画电影的中国文化隐喻", "author": "吴斯佳", "institution": "浙江传媒学院老师", "journal": "《当代电影》/《学苑论坛》", "category_id": "cat_auteur_theory", "category_name": "国漫复兴、影像本体与视听批评", "tags": ["《功夫熊猫》", "中国基因", "美国蜕变", "文化隐喻", "身份认同", "无字天书", "跨文化传播"], "core_thesis": "《功夫熊猫》系列在大量采撷皮影戏、武侠精神与道禅‘空’之哲学等‘中国基因’的同时，完成了向好莱坞个人英雄主义与美式幽默的‘美国蜕变’；阿宝‘我是谁’的寻根之旅，构成了西方对待崛起中中国复杂心态的深刻文化隐喻。", "theoretical_terms": ["中国基因（Chinese Cultural Genes）", "美国蜕变（American Metamorphosis / Transformation）", "文化隐喻（Cultural Metaphor）", "身份认同困惑（'Who am I?' Identity Dilemma）", "无字天书的道家戏谑解构", "文化折扣与跨文化杂合（Hybridity）", "西方看东方的心态折射"], "analytical_framework": [{"section": "一、功夫熊猫的中国基因：传统符号与哲学借鉴", "point": "巧妙化用中国民间皮影戏交代前史，大量运用武侠小说典型桥段（客栈、秘籍、拜师、点穴）；在哲学层面借用‘静心（Inner Peace）’与‘无字天书（大音希声、大道无形）’等东方道禅理念。"}, {"section": "二、功夫熊猫的美国蜕变：好莱坞叙事与美式价值观嫁接", "point": "解构中国传统森严的师徒伦理与宿命论，嫁接美式‘肥宅屌丝逆袭’的平民神话；强调自我相信（Believe in yourself）、个人选择高于宗族血统，以快餐文化式幽默冲淡东方武侠的悲剧肃杀。"}, {"section": "三、自我认知的复杂心态：崛起中国的跨文化投射", "point": "阿宝面对生父与养父的困惑（‘我是谁’）以及中国发明的烟花被孔雀王改造成毁灭性大炮，隐喻了西方世界在享受中国文化魅力的同时，对东方大国和平崛起所产生的复杂疑虑与心理调试。"}], "golden_quotes": ["《功夫熊猫》的成功在于它熟稔地借用‘中国基因’的外壳，精准地装入了‘美国梦’与个人英雄主义的文化内核。", "阿宝打开万众瞩目的武功秘笈却发现空无一字，这一对中国武侠‘无字天书’的戏谑改编，巧妙地将东方道禅‘虚静空灵’的玄妙转化为美式‘只要相信自己就是奇迹’的实用主义哲学。", "在跨文化的银幕转译中，‘熊猫阿宝’成为了多重文化杂合的符码容器，其身上承载的不仅是动画娱乐，更是好莱坞全球文化霸权对异质文明的消费与规训。", "《功夫熊猫2》中阿宝执着追问的‘我是谁’，不仅是个体的寻根探寻，更是西方文化潜意识里对一个正在全面复兴的东方中国所抱持的复杂文化隐喻与认同焦虑。", "分析这一跨国样本警示我们，中国文化的全球传播绝不能停留在被动充当好莱坞的‘原材料库’，而必须以强大的原创叙事建立起属于自己的跨文化表述权。"], "case_studies": ["梦工场《功夫熊猫》系列动画电影（Po、浣熊师父、孔雀王沈王爷）", "好莱坞《花木兰》等涉华题材动画的东方主义书写对比", "中国本土《哪吒之魔童降世》与美版《功夫熊猫》对‘天命与自我’的书写差异"], "essay_application": {"applicable_questions": ["论跨文化传播视域下中国文化元素的海外改编与接受（以好莱坞中国题材为例）", "评析跨国合拍/跨国动画中的‘东方主义’与文化杂合现象", "中国动画电影如何打破‘他者化’想象，讲好具有文化主体性的中国故事？"], "thesis_angle": "文化研究与跨文化传播论述题利器！掌握‘借用中国基因（皮影、道禅、武侠） -> 蜕变为美国核心价值（自我实现、实用主义） -> 隐喻西方对待中国崛起的复杂心态’三段式批判链条。", "argument_blueprint": ["立论点题：好莱坞对中国符号的‘借壳上市’——高超的跨文化杂合与霸权性改写。", "外在基因层：对东方视听符号（皮影、山水、武打）与哲学概念（静心、无字）的精准调用。", "内在价值观蜕变：以美式个人英雄主义解构东方集体尊师与伦理秩序，将深奥道禅降维为世俗励志口号。", "深层政治隐喻：从阿宝的‘身份焦虑’与‘火药武器隐喻’，揭示西方地缘文化心理的投影。", "结语启发：中国本土电影走出去，必须超越符号罗列，实现深层精神价值的自主输出。"]}}, {"id": "p16_nan_ye_mirror_dream_semiotics", "title": "电影:镜子与电影:梦:想象与符号", "author": "南野", "institution": "浙江传媒学院教授", "journal": "《当代电影》/《学苑论坛》", "category_id": "cat_auteur_theory", "category_name": "国漫复兴、影像本体与视听批评", "tags": ["经典电影理论", "博德里", "麦茨", "拉康", "镜像阶段", "电影机器意识形态", "想象的能指", "缝合机制"], "core_thesis": "系统梳理精神分析电影学与第二电影符号学的理论基石：博德里的电影机器意识形态理论将银幕阐释为确立先验主体的‘镜式活动’；麦茨将电影视听界定为激活窥视与退行体验的‘想象的能指’；拉康的‘镜像阶段’与实在界、符号界、想象界三元结构，揭示了电影如何通过缝合机制在主体的原初匮乏中完成无意识重构。", "theoretical_terms": ["基本电影机器的意识形态效果（Ideological Effects of the Basic Apparatus / Baudry）", "先验主体（Transcendental Subject）", "想象的能指（The Imaginary Signifier / Metz）", "退行状态（Regressive State）与似梦机制", "拉康的镜像阶段（Lacan's Mirror Stage）", "实在界、想象界与符号界（Real, Imaginary, Symbolic）", "主体的原初匮乏（Constitutive Lack）", "缝合理论（Suture Theory）"], "analytical_framework": [{"section": "一、博德里与阿尔特曼：电影院装置、镜子与先验主体", "point": "博德里指出电影院装置（暗室、固定座位、光束与银幕）构成了一个人工的先验感知系统；摄影机模拟了全知全能的‘中心之眼’，使观影者产生掌控世界的主体幻觉，电影机器实质上是在无意识层面生产意识形态认同。"}, {"section": "二、麦茨：电影与梦的异同，想象的能指", "point": "麦茨在第二电影符号学中指出，电影不同于真正的梦，观者保留了某种超自我知觉；但电影调动了人类的‘窥视狂’与‘退行（快乐原则压倒现实原则）’；电影银幕上的影像是物理上的不在场与感知上的在场，是一种‘想象的能指’。"}, {"section": "三、拉康：主体三元组与镜像裂变", "point": "分析拉康婴儿在镜子中辨认出完整自我、却同时陷入异化认同的‘镜像阶段’；电影银幕正是这一镜式体验的终生重演；观影者在‘实在界的匮乏’驱使下，沉溺于符号与想象之网中完成自我抚慰。"}], "golden_quotes": ["让—路易·博德里揭示出，电影院暗室与摄影机运动共同构筑了一个让观影者自以为成为宇宙起源的‘先验主体’幻觉机制，电影机器本身就是一种强大的意识形态装置。", "麦茨将电影影像定义为‘想象的能指’——它以逼真的视听感知呈现了一个物理上根本不在场的虚构世界，唤醒了人类深层心理中本我的退行与窥视本能。", "拉康的镜像阶段理论表明，人对自我的确认始于镜中虚像的误认与异化；而电影银幕恰恰是一面永恒流动的现代之镜，不断抚慰着人类面对‘实在界原初匮乏’时的根本焦虑。", "观影者之所以不断陷于镜子的窥见与梦境的游弋之中，是因为电影机制通过视听接缝（缝合），让分裂的无意识主体在虚构话语的他乡中完成自我的代偿性重构。", "精神分析电影理论拆解了电影‘照相写实’的纯洁假面，将研究目光投向暗室中欲望、幻觉与权力交织的心理机制，奠定了后现代电影批评不可动摇的理论基石。"], "case_studies": ["希区柯克《后窗》《眩晕》中的窥视欲与主体分裂", "好莱坞经典电影视听语法中的正反打‘缝合’机制", "大卫·林奇《穆赫兰道》中梦境、镜像与潜意识创伤的交错"], "essay_application": {"applicable_questions": ["论述第二电影符号学与精神分析电影理论对电影本体论的拓展", "如何理解博德里‘电影机器理论’（Apparatus Theory）中的意识形态建构？", "结合拉康‘镜像阶段’理论谈谈电影观众的心理认同机制"], "thesis_angle": "电影学考研学硕、博士入学考试必背压轴理论！凡是涉及‘观影心理学’、‘观众认同机制’、‘电影意识形态批评’的论述题，直接祭出博德里-麦茨-拉康黄金铁三角，理论高度瞬间拉满。", "argument_blueprint": ["理论溯源：从巴赞的照相本体论（物理真实）转向精神分析符号学（心理与欲望机制）。", "第一层（博德里机器理论）：影院装置模拟柏拉图洞穴，将观众固定在‘全知全能的先验主体’假象中，服务于意识形态生产。", "第二层（麦茨想象能指）：影像的‘不在场之在场’，依托退行机制与窥视欲望，形成似梦非梦的快感系统。", "第三层（拉康镜像与缝合）：银幕作为异化之镜，观众通过视线组接（缝合）弥合实在界的欲望匮乏。", "结语：精神分析理论告诉我们，电影不仅是现实的镜像，更是人类集体潜意识与欲望结构的精密折射仪。"]}}];
+    const CATEGORIES_DATA = [{"id": "cat_ai_media", "name": "专题一：AIGC与数智媒介重构", "desc": "聚焦人工智能与大模型技术对影视视听生成、配乐工艺、劳动主体性与价值结构的颠覆性重构。", "badge": "AIGC · 算法批评", "icon": "🤖", "color": "#3b82f6"}, {"id": "cat_short_drama", "name": "专题二：短剧崛起与后电影时代", "desc": "深入剖析微短剧‘碎片化美学’与‘触发机制’，辨析竖屏微屏与横屏大银幕的视听空间秩序与画面格调坚守。", "badge": "微短剧 · 视听本体", "icon": "📱", "color": "#8b5cf6"}, {"id": "cat_mainstream", "name": "专题三：新主流大片与新大众文艺", "desc": "系统考察饶曙光‘共同体美学’、崇高范式升维、王一川‘新大众性与经验成形’以及平民化拯救叙事。", "badge": "主流电影 · 共同体美学", "icon": "🏛️", "color": "#ef4444"}, {"id": "cat_traditional", "name": "专题四：中国传统美学与东方诗学", "desc": "探究中国电影美学中的‘正’（仪式/崇高/雅）、艺术电影的‘枯槁美学与生命意识’，以及《只此青绿》跨媒介转化。", "badge": "东方美学 · 守正创新", "icon": "🎨", "color": "#10b981"}, {"id": "cat_auteur_theory", "name": "专题五：国漫复兴、影像本体与视听批评", "desc": "涵盖新时代国漫产业格局与文化位置、《功夫熊猫》跨文化隐喻、徐冰拾得影像与策展作者性，以及拉康-麦茨精神分析理论。", "badge": "国漫 · 经典理论", "icon": "🎞️", "color": "#f59e0b"}];
+    const BLUEPRINTS_DATA = [{"id": "bp1", "title": "论题一：人工智能（AIGC）对影视艺术生产、美学范式与创作者主体性的重构", "tag": "数智视听 · 核心高频", "papers_involved": ["刘捷（AI配乐）", "茹纪晓（视觉过剩与共情稀缺）", "徐皓月（AI短剧抽卡师主体性悖论）"], "thesis": "批判‘技术决定论’与‘技术虚无主义’。提出AIGC的实质是‘影像再现门槛归零与共情价值稀缺’；创作从单向手工走向人机协同网络装配，倒逼电影摆脱均值化视觉奇观，依托共同体美学重铸人文共鸣。", "outline": [{"part": "引论：视听技术范式的历史位移", "content": "指出AIGC正在带来继有声化、数字化之后的第四次技术革命。从Seedance到AI音乐大模型，技术从辅助工具跃迁为直接内容生成者，引发生产力与美学的双重裂变。"}, {"part": "一、生产工艺与创作逻辑：从‘线性递进’到‘人机协同与概率迭代’", "content": "引用刘捷论文观点：传统配乐与制作各环节严格线性推进，而AI时代打破了分工壁垒，转变为以提示词工程为核心的快速迭代。作曲家由‘乐理编织者’转向‘审美评价与甄别者’，作者性呈现网络化装配状态。"}, {"part": "二、核心审美矛盾的位移：从‘视觉过剩’到‘共情稀缺’", "content": "引用茹纪晓论文观点：高质量视听奇观的普遍化导致视觉贬值，作品审美走向同质化平庸。观众对感官轰炸产生耐受，‘共情稀缺’成为核心症候。电影必须依托‘共同体美学’在价值认同、人物关系与信任契约中重建情感黏性。"}, {"part": "三、劳动控制与主体性反思：警惕‘均值影像’与创作去技能化", "content": "引用徐皓月论文观点：AI抽卡师面临‘赋权表象下的劳动异化’。大模型统计均值输出的‘均值影像’缺乏具身经验的粗粝与真实，创作者沦为概率博弈的数字计件工。文艺的人民性要求创作者必须重返热气腾腾的现实生活。"}, {"part": "结论：高科技终须回归高人文", "content": "总结：算法能够模拟无瑕的光影与旋律，却无法复刻人类面对创伤、苦难与理想时的道德决断与生命温度。影视艺术的未来在于以人的主体性驾驭算法，走向‘共情型影视工业’。"}], "golden_hook": "当逼真的视觉奇观通过几行提示词即可批量复制，技术的震撼感便不可避免地走向边际递减；算法越是逼近视听极限，真正具有文化体温与生命共鸣的共情表达就越发显得千金难求。"}, {"id": "bp2", "title": "论题二：微短剧的兴起对传统电影视听叙事与美学格局的冲击与启示", "tag": "后电影 · 媒介竞合", "papers_involved": ["蔡晓芳（碎片化美学与情感装置）", "方兆力（移动刷屏时代的电影画面格调）", "王一川（电影新大众性）"], "thesis": "短剧作为后电影时代受众感知变迁的文化样本，以‘即时触发’与‘碎片化情感装置’瓦解了经典长篇因果链条；电影唯有在场域仪式、空间秩序（景深横屏）与经验成形上坚守独特的‘电影感’格调，方能在媒介竞合中守正创新。", "outline": [{"part": "引论：移动微屏对大银幕的结构性围攻", "content": "据统计微短剧单日使用时长追平即时通信，微短剧已非边缘亚文化，而是后电影时代深刻改变受众心理习惯的强势力量。"}, {"part": "一、叙事动力的根本质变：从‘因果激发’到算法主导的‘即时触发’", "content": "引用蔡晓芳论文观点：传统电影遵循亚里士多德式完整有机体与人物心理内驱（激发）；而短剧是依托完播率算法打造的高频‘情感条件反射装置’，前置反转与爽点，重塑了受众的认知耐心。"}, {"part": "二、视听本体的断裂与较量：移动竖屏 vs 影院横屏空间秩序", "content": "引用方兆力论文观点：竖屏受限于画幅，沦为大特写与扁平布光的‘面孔挤压’；而电影依赖横向宽银幕（16:9/2.35:1）构建深层景深、群像调度与复杂光影隐喻。影院黑屋子具备不可替代的崇高心理仪式感。"}, {"part": "三、电影的应对之道：超越流量，完成大众生存痛点的‘经验成形’", "content": "引用王一川论文观点：电影面对碎片化冲击，不能盲目‘短剧化’或被算法情绪绑架，而应构建复合传播场，将大众在时代激变中零散的生命痛感提炼为具有经典审美价值的艺术成形。"}, {"part": "结论：在喧嚣刷屏中守护视听精神殿堂", "content": "总结：微短剧提供瞬时快感，电影提供精神安顿与生命沉思；二者并非简单的你死我活，而是在分层消费中促使电影坚守自身的视听格调与美学尊严。"}], "golden_hook": "在微短剧以廉价的高亮平光和机械的面孔特写填满手掌微屏时，电影对阴影、空间层次与虚实留白的苛求，守护了视听艺术最具魅力的神秘感与呼吸感。"}, {"id": "bp3", "title": "论题三：新时代中国新主流大片的美学演进、崇高重塑与价值建构", "tag": "主流大片 · 共同体崇高", "papers_involved": ["饶曙光（新主流大片崇高范式）", "范志忠（平民化拯救叙事）", "李镇（中国电影美学中的‘正’）"], "thesis": "新主流大片近二十年实现了从‘家国崇高’向‘共同体崇高’的范式升华，以平民视角的凡人善举落地拯救叙事，并在中华礼乐文明‘正’（仪式、崇高、雅）的滋养下，构筑起面向人类命运共同体的自主电影话语。", "outline": [{"part": "引论：新主流大片作为国家形象与文化心理的载体", "content": "从早期《建国大业》到《流浪地球》，新主流电影打破了以往主旋律电影说教生硬的窠臼，成为兼具商业号召力与精神凝聚力的文化现象。"}, {"part": "一、崇高范式的升维革命：从‘家国崇高’迈向‘人类命运共同体崇高’", "content": "引用饶曙光论文观点：前期依托《战狼2》《长津湖》聚焦民族国家认同与集体英雄主义（家国崇高）；随后在《流浪地球》中升维至生态、人类存续与跨文明包容的‘共同体崇高’，以愚公移山携家远行超越西方诺亚方舟精英逃难逻辑。"}, {"part": "二、拯救叙事的平民化降维：小人物良知守望与凡人英雄主义", "content": "引用范志忠论文观点：文牧野《我不是药神》《欢迎来龙餐馆》表明，正义叙事不再依赖不可战胜的孤胆超人，而是降维至充满烟火气与性格瑕疵的小人物。在柴米油盐与战火互助中，凡人善举激发了最坚实的情感共鸣。"}, {"part": "三、美学底蕴的中国基因：以仪式感、崇高美与雅韵之境持守其‘正’", "content": "引用李镇论文观点：新主流电影的庄重力量来自中国传统‘礼乐’传统。通过影像仪式的伦理秩序感与‘雅’的含蓄意境，塑造既有浩然正气又具温厚底蕴的中国美学品格。"}, {"part": "结论：构筑具有世界对话力的人类文明新形态叙事", "content": "总结：新主流大片通过崇高美学的升维与平民情感的深扎，成功把中国叙事融入人类命运共同体的世界宏大图景。"}], "golden_hook": "从建立在民族国家认同之上的‘家国崇高’，升维至以人类整体命运为关怀的‘共同体崇高’，体现了中国电影从本土精神凝聚走向全球文明引领的自觉担当。"}, {"id": "bp4", "title": "论题四：中华优秀传统文化的创造性转化与当代东方电影诗学建构", "tag": "东方美学 · 传统双创", "papers_involved": ["高凡（《只此青绿》跨媒介重构）", "刘强（枯槁美学的生命意识）", "李镇（中国电影美学中的‘正’）", "陈亦水（国漫审美创新）"], "thesis": "中华传统文化的现代视听转化绝非外在文化符号的猎奇拼接，而是通过跨媒介转译、枯槁荒寒意境的生命关照以及写意数字技术创新，实现传统哲学意境与现代电影工业的深层化合。", "outline": [{"part": "引论：坚定文化主体性与‘双创’方针", "content": "电影作为现代视听工业，成为展现东方美学、铸牢中华民族现代文明的重要载体。"}, {"part": "一、符号再生与物质转译：跨媒介协同唤醒古老画境", "content": "引用高凡论文观点：以《只此青绿》为例，画-舞-影的三重转译，将宋代青绿设色转化为动态光影；以‘双时空对望’打破历史隔阂，以无名匠人群像赋予古典美学深厚的平民劳动根基。"}, {"part": "二、生命哲学的深度勘探：在‘枯槁美学’中体证东方生生之德", "content": "引用刘强论文观点：中国艺术电影不同于西方废墟与日本侘寂，它在戈壁荒原、破败工业的荒寒古澹之境中，通过‘形神一体’的影像减法，洞见‘枯木逢春、生命坚守’的道禅生命诗学。"}, {"part": "三、数智视听的意境开拓：国漫技术自立与传统再功能化书写", "content": "引用陈亦水论文观点：从《深海》粒子水墨到《长安三万里》诗意时空，国产动画摆脱了皮克斯写实范式，以数字技术重塑写意传统，并将古老神话母题与现代青年焦虑有机接轨。"}, {"part": "结论：以中正雅致之风自立于世界电影之林", "content": "总结：以李镇‘守正创新’理念升华，将中华优秀传统美学内化为当代中国电影独具魅力的精神标识与美学风骨。"}], "golden_hook": "枯槁美学并非绝望的沉沦，它植根于道禅‘万物负阴而抱阳’的古老智慧，在荒寒萧索的影像留白处，蕴育着天地大化与人类生命最坚韧的生机。"}, {"id": "bp5", "title": "论题五：数字与数据库时代电影‘作者论’与影像本体论的危机与重构", "tag": "理论溯源 · 经典前沿", "papers_involved": ["李瑞华（拾得影像与策展者-作者）", "刘捷（人机协同作者性）", "南野（博德里机器理论、麦茨想象能指与拉康镜像）"], "thesis": "数据库技术与生成式算法彻底解构了以胶片物理印迹为基石的巴赞照相本体论，以及古典‘天才导演’的作者神话；作者性升维为‘算法装配与批判性策展’，影像本体从对物理现实的膜拜，转向对人类潜意识欲望机制与社会症候的深度反思。", "outline": [{"part": "引论：从胶片实存到虚拟数据流的本体地震", "content": "从摄影机指向现实的‘木乃伊情结’，到无摄影机、无演员的拾得影像与AIGC，电影本体论迎来百年来最深刻的范式重置。"}, {"part": "一、作者性的去中心化与网络装配：人机协同新范式", "content": "引用刘捷论文观点：算法模型、提示词工程师、导演共同构成创作主体，作者性不再是孤立天才的灵光一闪，而是多主体交互对话的产物。"}, {"part": "二、物质缺席者的思想在场：拾得影像与‘策展者-作者’的诞生", "content": "引用李瑞华论文观点：徐冰《蜻蜓之眼》用11000小时公共监控剪辑长片。拍摄者物质性缺席，但作者通过批判性引用与蒙太奇重组，在图像泛滥的数据库垃圾中重塑了冷峻的思想在场。"}, {"part": "三、精神分析视角的终极观照：从照相真实退回‘欲望与认同之镜’", "content": "引用南野论文观点：博德里机器理论揭示出影院通过视听机制诱导先验主体幻觉；麦茨指出影像是‘想象的能指’；拉康镜像阶段表明银幕正是为了缝合人类面对实在界匮乏的焦虑。当数字技术抹平物理真实，电影更显露出其作为人类潜意识欲望折射仪的本体属性。"}, {"part": "结论：在虚幻拟像中重获批判的勇气", "content": "总结：数字时代电影本体论的演进证明，影像的价值从来不在于物理像素的逼真，而在于人类如何运用这门媒介勘探自身的精神深渊与社会未来。"}], "golden_hook": "拾得影像实践打破了‘摄影机指向现实才拥有作者性’的神话，宣告了在海量影像垃圾堆中进行思想重组的‘策展者-作者’的诞生；物质可以缺席，唯有反思的思想永恒在场。"}];
+    const LAN_IP = "192.168.31.166";
+    const LAN_PORT = 8080;
+    const LAN_URL = `http://${LAN_IP}:${LAN_PORT}`;
+    const CURRENT_URL = (window.location.protocol.startsWith('http'))
+      ? window.location.href.split('#')[0]
+      : LAN_URL;
+  </script>
+
+  <!-- Application Logic -->
+  <script>
+    // State
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Elements
+    const papersGrid = document.getElementById('papers-grid');
+    const categoryFilterPills = document.getElementById('category-filter-pills');
+    const blueprintsGrid = document.getElementById('blueprints-grid');
+    const quotesStream = document.getElementById('quotes-stream');
+    const globalSearchInput = document.getElementById('global-search');
+    const paperModal = document.getElementById('paper-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const qrModal = document.getElementById('qr-modal');
+    const qrCloseBtn = document.getElementById('qr-close-btn');
+    const btnDeviceHub = document.getElementById('btn-device-hub');
+    const toastEl = document.getElementById('toast');
+    const themeToggleBtn = document.getElementById('btn-toggle-theme');
+    const themeIcon = document.getElementById('theme-icon');
+
+    // Show Toast
+    function showToast(msg) {
+      toastEl.textContent = msg || '已成功复制到剪贴板！';
+      toastEl.classList.add('show');
+      setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 2000);
+    }
+
+    // Copy to clipboard
+    function copyText(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showToast(successMsg));
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          showToast(successMsg);
+        } catch (err) {
+          console.error(err);
+        }
+        textArea.remove();
+      }
+    }
+
+    // Init Theme
+    const savedTheme = localStorage.getItem('film_corpus_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    themeIcon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+    themeToggleBtn.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('film_corpus_theme', next);
+      themeIcon.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Render Category Filter Pills
+    function renderCategoryPills() {
+      CATEGORIES_DATA.forEach(cat => {
+        const count = PAPERS_DATA.filter(p => p.category_id === cat.id).length;
+        const btn = document.createElement('button');
+        btn.className = 'cat-pill';
+        btn.setAttribute('data-cat', cat.id);
+        btn.innerHTML = `${cat.icon} ${cat.name.split('：')[1] || cat.name} (${count})`;
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = cat.id;
+          renderPapers();
+        });
+        categoryFilterPills.appendChild(btn);
+      });
+
+      // Handle 'all' pill
+      const allPill = categoryFilterPills.querySelector('[data-cat="all"]');
+      allPill.addEventListener('click', () => {
+        document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+        allPill.classList.add('active');
+        currentCategory = 'all';
+        renderPapers();
+      });
+    }
+
+    // Render Paper Cards
+    function renderPapers() {
+      papersGrid.innerHTML = '';
+      const filtered = PAPERS_DATA.filter(p => {
+        const matchesCat = currentCategory === 'all' || p.category_id === currentCategory;
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch = !q || 
+          p.title.toLowerCase().includes(q) ||
+          p.author.toLowerCase().includes(q) ||
+          p.core_thesis.toLowerCase().includes(q) ||
+          p.tags.some(t => t.toLowerCase().includes(q)) ||
+          p.theoretical_terms.some(t => t.toLowerCase().includes(q)) ||
+          p.golden_quotes.some(g => g.toLowerCase().includes(q)) ||
+          (p.case_studies && p.case_studies.some(c => c.toLowerCase().includes(q)));
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        papersGrid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--text-muted);">
+          🔍 未找到匹配的论文，请尝试其他关键词或切换专题。
+        </div>`;
+        return;
+      }
+
+      filtered.forEach(paper => {
+        const card = document.createElement('div');
+        card.className = 'paper-card';
+        card.innerHTML = `
+          <div class="card-meta">
+            <span class="cat-badge">${paper.category_name.split('：')[1] || paper.category_name}</span>
+            <span class="journal-badge">${paper.journal}</span>
+          </div>
+          <h3 class="card-title">${paper.title}</h3>
+          <div class="card-author">✍️ ${paper.author} · <span style="font-size:0.75rem;">${paper.institution}</span></div>
+          <div class="card-thesis">
+            <strong>核心论点：</strong>${paper.core_thesis}
+          </div>
+          <div class="terms-tags">
+            ${paper.tags.slice(0, 4).map(t => `<span class="term-tag">#${t}</span>`).join('')}
+          </div>
+          <div class="card-footer">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">${paper.golden_quotes.length} 句金句语料</span>
+            <button class="btn-detail" data-id="${paper.id}">
+              查看深度研读 & 语料 ➔
+            </button>
+          </div>
+        `;
+
+        card.querySelector('.btn-detail').addEventListener('click', () => {
+          openPaperModal(paper);
+        });
+
+        papersGrid.appendChild(card);
+      });
+    }
+
+    // Open Paper Modal
+    function openPaperModal(paper) {
+      document.getElementById('modal-cat').textContent = paper.category_name;
+      document.getElementById('modal-title').textContent = paper.title;
+      document.getElementById('modal-meta').textContent = `${paper.author}（${paper.institution}） | ${paper.journal}`;
+
+      const modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = `
+        <div>
+          <div class="detail-section-title">📌 核心论点与立论主旨</div>
+          <div class="card-thesis" style="font-size: 0.92rem;">
+            ${paper.core_thesis}
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section-title">🔑 核心理论范畴与关键词</div>
+          <div class="terms-tags" style="gap: 0.5rem;">
+            ${paper.theoretical_terms.map(t => `<span class="term-tag" style="font-size:0.8rem; padding: 0.3rem 0.6rem; background-color: var(--accent-light); color: var(--accent-color); font-weight: 500;">${t}</span>`).join('')}
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section-title">💎 论述背诵金句（点击一键复制入答题卡）</div>
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            ${paper.golden_quotes.map((quote, idx) => `
+              <div class="quote-box">
+                <div>“${quote}”</div>
+                <button class="quote-copy-btn" onclick="copyText('${quote.replace(/'/g, "\\'")}', '已复制该论述金句！')">
+                  📋 复制此句
+                </button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section-title">📑 分章论证逻辑与推导脉络</div>
+          <div class="section-list">
+            ${paper.analytical_framework.map(sec => `
+              <div class="section-item">
+                <div class="section-item-title">${sec.section}</div>
+                <div class="section-item-text">${sec.point}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section-title">🎬 涉及作品与分析案例</div>
+          <div style="font-size: 0.88rem; color: var(--text-main); background: var(--bg-primary); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+            ${paper.case_studies.map(c => `• ${c}`).join('<br>')}
+          </div>
+        </div>
+
+        <div>
+          <div class="detail-section-title">🎯 论述题答题实战指引</div>
+          <div style="background-color: var(--accent-light); border: 1px solid rgba(37,99,235,0.2); border-radius: 8px; padding: 1rem; font-size: 0.88rem; color: var(--text-main); line-height: 1.6;">
+            <div style="font-weight: 700; color: var(--accent-color); margin-bottom: 0.4rem;">适用考题方向：</div>
+            <ul style="padding-left: 1.2rem; margin-bottom: 0.6rem;">
+              ${paper.essay_application.applicable_questions.map(q => `<li>${q}</li>`).join('')}
+            </ul>
+            <div style="font-weight: 700; color: var(--accent-color); margin-bottom: 0.4rem;">破题与立论切入点：</div>
+            <p style="margin-bottom: 0.6rem;">${paper.essay_application.thesis_angle}</p>
+            <div style="font-weight: 700; color: var(--accent-color); margin-bottom: 0.4rem;">答题展开骨架（Topic Sentences）：</div>
+            <ol style="padding-left: 1.2rem;">
+              ${paper.essay_application.argument_blueprint.map(bp => `<li>${bp}</li>`).join('')}
+            </ol>
+          </div>
+        </div>
+      `;
+
+      paperModal.classList.add('active');
+    }
+
+    modalCloseBtn.addEventListener('click', () => paperModal.classList.remove('active'));
+    paperModal.addEventListener('click', (e) => {
+      if (e.target === paperModal) paperModal.classList.remove('active');
+    });
+
+    // Render Blueprints
+    function renderBlueprints() {
+      blueprintsGrid.innerHTML = '';
+      BLUEPRINTS_DATA.forEach(bp => {
+        const card = document.createElement('div');
+        card.className = 'blueprint-card';
+        card.innerHTML = `
+          <div class="bp-header">
+            <div>
+              <span class="cat-badge">${bp.tag}</span>
+              <h3 class="bp-title" style="margin-top: 0.4rem;">${bp.title}</h3>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem;">
+                核心理论依托：${bp.papers_involved.join(' + ')}
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="copyText('${bp.golden_hook.replace(/'/g, "\\'")}\n\n【立论核心】${bp.thesis.replace(/'/g, "\\'")}', '已复制核心立论与高分亮句！')">
+              📋 复制立论与金句
+            </button>
+          </div>
+
+          <div class="bp-thesis">
+            <strong>核心立论（Thesis Statement）：</strong><br>
+            ${bp.thesis}
+          </div>
+
+          <div class="quote-box" style="margin: 0;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--accent-color); margin-bottom: 0.2rem;">✨ 阅卷吸睛段首金句（可以直接默写背诵）：</div>
+            <div>“${bp.golden_hook}”</div>
+          </div>
+
+          <div>
+            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--text-main);">📑 标准答题骨架与分层论证（可直接作为论述题大纲）：</div>
+            <div>
+              ${bp.outline.map(step => `
+                <div class="bp-outline-step">
+                  <div class="bp-step-name">${step.part}</div>
+                  <div class="bp-step-desc">${step.content}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+        blueprintsGrid.appendChild(card);
+      });
+    }
+
+    // Render Quotes Stream
+    function renderQuotes() {
+      quotesStream.innerHTML = '';
+      const allQuotes = [];
+      PAPERS_DATA.forEach(p => {
+        p.golden_quotes.forEach(q => {
+          allQuotes.push({
+            quote: q,
+            paper_title: p.title,
+            author: p.author,
+            journal: p.journal,
+            category: p.category_name
+          });
+        });
+      });
+
+      const q = searchQuery.toLowerCase().trim();
+      const filtered = allQuotes.filter(item => {
+        return !q || item.quote.toLowerCase().includes(q) || item.author.toLowerCase().includes(q) || item.paper_title.toLowerCase().includes(q);
+      });
+
+      if (filtered.length === 0) {
+        quotesStream.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-muted);">未找到匹配的金句。</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'quote-card';
+        card.innerHTML = `
+          <div class="quote-text">“${item.quote}”</div>
+          <div class="quote-meta-row">
+            <div class="quote-source">
+              —— ${item.author}《${item.paper_title}》（${item.journal}）
+            </div>
+            <button class="btn" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;" onclick="copyText('${item.quote.replace(/'/g, "\\'")}\n—— ${item.author}《${item.paper_title}》', '已复制该名篇金句！')">
+              📋 一键复制
+            </button>
+          </div>
+        `;
+        quotesStream.appendChild(card);
+      });
+    }
+
+    // Mode Switcher Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.view-content').forEach(v => v.classList.remove('active'));
+        btn.classList.add('active');
+        const viewId = btn.getAttribute('data-view');
+        document.getElementById(viewId).classList.add('active');
+      });
+    });
+
+    // Global Search Listener
+    globalSearchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderPapers();
+      renderQuotes();
+    });
+
+    // QR Code Modal for Mobile Access (Local & Public Cloud)
+    let qrGenerated = false;
+    btnDeviceHub.addEventListener('click', () => {
+      qrModal.classList.add('active');
+      const urlDisplay = document.getElementById('qr-lan-url');
+      if (urlDisplay) urlDisplay.textContent = CURRENT_URL;
+      if (!qrGenerated && typeof QRCode !== 'undefined') {
+        new QRCode(document.getElementById("qrcode"), {
+          text: CURRENT_URL,
+          width: 180,
+          height: 180,
+          colorDark: "#0f172a",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+        qrGenerated = true;
+      }
+    });
+
+    qrCloseBtn.addEventListener('click', () => qrModal.classList.remove('active'));
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) qrModal.classList.remove('active');
+    });
+
+    document.getElementById('copy-url-btn').addEventListener('click', () => {
+      copyText(CURRENT_URL, '在线访问网址已成功复制！');
+    });
+
+    // Initialize UI
+    renderCategoryPills();
+    renderPapers();
+    renderBlueprints();
+    renderQuotes();
+  </script>
+</body>
+</html>
